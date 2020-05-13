@@ -4,7 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator} from 'react-navigation-tabs';
 
 import HomeScreen from './screens/HomeScreen'
-import SearchScreen from './screens/SearchScreen'
+import SearchScreen from './screens/SearchScreens/SearchScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import UpdateNewsScreen from './screens/UpdateNewsScreen'
 
