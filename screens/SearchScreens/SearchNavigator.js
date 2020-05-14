@@ -14,6 +14,7 @@ const TopStack = createStackNavigator({
     TopScreen
 })
 TopStack.navigationOptions = {
+  tabBarLabel: 'Hàng đầu',
     tabBarOptions: {
         activeTintColor: 'black',
         inactiveTintColor:'#a3a3a3',
@@ -24,14 +25,15 @@ TopStack.navigationOptions = {
           backgroundColor: 'white',
           width: screen(96),
           marginLeft: screen(2),
-       
         },
+        indicatorStyle: { backgroundColor: 'black'}
       }
    }
 const YourStack = createStackNavigator({
     YourScreen
 })
 YourStack.navigationOptions = {
+    tabBarLabel: 'Của bạn',
     tabBarOptions: {
         activeTintColor: 'black',
         inactiveTintColor:'#a3a3a3',
@@ -43,12 +45,14 @@ YourStack.navigationOptions = {
           width: screen(96),
           marginLeft: screen(2),
         },
+        indicatorStyle: { backgroundColor: 'black'}
       }
    }
 const EverybodyStack = createStackNavigator({
     EverybodyScreen
 })
 EverybodyStack.navigationOptions = {
+  tabBarLabel: 'Mọi người',
     tabBarOptions: {
         activeTintColor: 'black',
         inactiveTintColor:'#a3a3a3',
@@ -60,6 +64,7 @@ EverybodyStack.navigationOptions = {
           width: screen(96),
           marginLeft: screen(2),
         },
+        indicatorStyle: { backgroundColor: 'black'}
       }
    }
 const AppNavigator = createMaterialTopTabNavigator({

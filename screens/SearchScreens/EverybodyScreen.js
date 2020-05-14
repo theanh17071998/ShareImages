@@ -7,24 +7,38 @@ import {
   View,Dimensions
 } from 'react-native';
 
+import EveryBody from './../../components/Searchs/EveryBody'
+const deviceWidth = Dimensions.get('window').width;
+const screen = (percent) => deviceWidth * percent / 100;
+
+
 export default class Everybody extends React.Component {
-    static navigationOptions =  {
-        headerShown: false
-    };
+  static navigationOptions =  {
+    headerShown: false
+  };
   render(){
     return (
-    <View>
-        <Text>Everybody</Text>
+    <View style={styles.container}>
+      <ScrollView>
+       <EveryBody/>
+       <EveryBody/>
+       <EveryBody/>
+       <EveryBody/>
+       <EveryBody/>
+       <EveryBody/>
+       <EveryBody/>
+       <EveryBody/>
+       <EveryBody/>
+       <EveryBody/>
+       <EveryBody/>
+      </ScrollView>
     </View>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection:'row',
-    backgroundColor: '#fff',
-    paddingLeft:14,
-    paddingRight: 14,
+    paddingLeft:screen(1.5),
+    paddingRight: screen(1),
   },
 });

@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, Dimensions} from 'react-native'
+import {Dimensions} from 'react-native'
 import { SearchBar } from 'react-native-elements';
 
 const deviceWidth = Dimensions.get('window').width;
@@ -19,6 +19,8 @@ export default class Searchbar extends React.Component {
 
     return (
       <SearchBar 
+        platform= "android"
+        lightTheme = {true}
         placeholder="Tìm kiếm ý tưởng"
         onChangeText={this.updateSearch}
         value={search}

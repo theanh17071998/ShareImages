@@ -2,8 +2,14 @@ import React from 'react';
 import {
   StyleSheet,
   Text, 
-  View
+  View,
+  Dimensions
 } from 'react-native';
+
+import Top from '../../components/Searchs/Top'
+
+const deviceWidth = Dimensions.get('window').width;
+const screen = (percent) => deviceWidth * percent / 100;
 
 export default class TopScreen extends React.Component {
     static navigationOptions =  {
@@ -21,18 +27,40 @@ export default class TopScreen extends React.Component {
     
   render(){
     return (
-    <View>
-        <Text>TopScreen</Text>
+    <View style={styles.container}>
+      <Text style={styles.title} >
+        Ý tưởng dành cho bạn
+      </Text>
+      <View style={styles.content}>
+        <Top/>
+        <Top/>
+        <Top/>
+        <Top/>
+        <Top/>
+        <Top/>
+        <Top/>
+        <Top/>
+      </View>
+       
     </View>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection:'row',
-    backgroundColor: '#fff',
-    paddingLeft:14,
-    paddingRight: 14,
+    paddingLeft:screen(1.5),
+    paddingRight: screen(1),
   },
+  content: {
+    flex:1,
+    width: screen(97),
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  },
+  title: {
+    paddingLeft: screen(1),
+    marginTop: screen(4),
+    marginBottom: screen(2),
+    fontSize: 17
+  }
 });
