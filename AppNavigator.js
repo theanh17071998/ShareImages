@@ -6,7 +6,8 @@ import { createBottomTabNavigator} from 'react-navigation-tabs';
 import HomeScreen from './screens/HomeScreen'
 import SearchScreen from './screens/SearchScreen'
 import ProfileScreen from './screens/ProfileScreen'
-import UpdateNewsScreen from './screens/UpdateNewsScreen'
+import UpdateNewsScreen from './screens/UpdateNewsScreens/UpdateNewsScreen'
+import NewsListItemScreens from './screens/UpdateNewsScreens/NewsListItemScreen'
 
 import HomeIcon from './assets/home-run.png'
 
@@ -33,8 +34,9 @@ const ProfileStack = createStackNavigator({
 ProfileStack.navigationOptions = {
   tabBarLabel:'Profile'
  }
- const UpdateNewsStack = createStackNavigator({
-    UpdateNewsScreen
+const UpdateNewsStack = createStackNavigator({
+  UpdateNewsScreen,
+  //NewsListItemScreens
 })
 UpdateNewsStack.navigationOptions = {
   tabBarLabel:'Update News'
