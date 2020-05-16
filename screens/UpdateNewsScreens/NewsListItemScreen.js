@@ -7,11 +7,11 @@ import {
   Text,
   View, Dimensions
 } from 'react-native';
-import UpdateNews from '../../components/UpdateNews'
-import BikerImage from '../assets/biker.jpg'
+
+
 const deviceWidth = Dimensions.get('window').width;
 
-export default class NewsListItemScreens extends React.Component {
+export default class NewsListItemScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: '10 Biker Pins you might like',

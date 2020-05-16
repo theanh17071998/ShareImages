@@ -7,8 +7,8 @@ import {
   Text,
   View, Dimensions
 } from 'react-native';
-import UpdateNews from '../../components/UpdateNews'
-import BikerImage from '../assets/biker.jpg'
+import UpdateNews from '../../components/UpdateNews/UpdateNews'
+import BikerImage from '../../assets/biker.jpg'
 const deviceWidth = Dimensions.get('window').width;
 
 export default class UpdateNewsScreen extends React.Component {

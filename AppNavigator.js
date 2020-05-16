@@ -36,7 +36,7 @@ ProfileStack.navigationOptions = {
  }
 const UpdateNewsStack = createStackNavigator({
   UpdateNewsScreen,
-  //NewsListItemScreens
+  NewsListItemScreens
 })
 UpdateNewsStack.navigationOptions = {
   tabBarLabel:'Update News'
