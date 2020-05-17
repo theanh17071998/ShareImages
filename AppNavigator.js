@@ -10,6 +10,7 @@ import UpdateNewsScreen from './screens/UpdateNewsScreens/UpdateNewsScreen'
 
 import HomeIcon from './assets/home-run.png'
 import NewsListItemScreen from './screens/UpdateNewsScreens/NewsListItemScreen'
+import ImageDetailsScreen from './screens/UpdateNewsScreens/ImageDetailsScreen'
 
 const HomeStack = createStackNavigator({
     HomeScreen
@@ -35,11 +36,12 @@ ProfileStack.navigationOptions = {
   tabBarLabel:'Profile'
  }
 const UpdateNewsStack = createStackNavigator({
-  UpdateNewsScreen: UpdateNewsScreen,
-  NewsListItemScreen: NewsListItemScreen
+  UpdateNewsScreen,
+  NewsListItemScreen,
+  ImageDetailsScreen
 })
 // UpdateNewsScreen.navigationOptions = {
-//   tabBarLabel: 'Update'
+//   tabBarLabel: 'Update News'
 // }
 
 const AppNavigator = createBottomTabNavigator({

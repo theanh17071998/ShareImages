@@ -42,17 +42,17 @@ const styles = StyleSheet.create({
     content: {
         marginVertical: 10
     },
-    imgContainer: {
-        flexDirection: 'row',
-        width: '100%',
-        justifyContent: 'center'
-        // borderTopLeftRadius: 10,
-        // borderBottomLeftRadius: 10
-    },
     imgText: {
         fontSize: 17,
         marginLeft: 15,
         marginBottom: 15
+    },
+    imgContainer: {
+        flexDirection: 'row',
+        //width: '100%',
+        justifyContent: 'center'
+        // borderTopLeftRadius: 10,
+        // borderBottomLeftRadius: 10
     },
     img: {
         height: 150,

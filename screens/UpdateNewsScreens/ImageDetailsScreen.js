@@ -7,7 +7,6 @@ import {
   Text,
   View,
   Dimensions,
-  Button,
 } from "react-native";
 import Masonry from 'react-native-masonry-layout';
 import BikerImage from '../../assets/biker.jpg'
@@ -21,7 +20,7 @@ const deviceWidth = Dimensions.get("window").width;
 export default class NewsListItemScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam("notificationTitle"),
+      title: 'react',
       headerTitleAlign: "center",
       headerTitleStyle: {
         color: "white",
@@ -34,43 +33,14 @@ export default class NewsListItemScreen extends React.Component {
   };
 
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      "newsList": [
-        { "id": 1, "notification": "10 Biker Pins you might like", "img": BikerImage },
-        { "id": 2, "notification": "We think you might like this", "img": GirlBiker },
-        { "id": 3, "notification": "14 trending Pins about Vehicle", "img": Suzuki },
-        { "id": 4, "notification": "You might like this Pins", "img": BikerImage }
-
-      ]
-    };
-  }
+ 
 
   render() {
     const { navigation } = this.props;
     return (
       <View>
-        <FlatList
-          data={this.state.newsList}
-          //numColumns={2}
-          renderItem={({ item }) =>
-            <NewsListItem news={item} onPress={() => this.props.navigation.navigate('ImageDetailsScreen')} />
-          }
-          keyExtractor={item => `${item.id}`}
-        // contentContainerStyle={ styles}
-        />
+          <Image style={styles.img} source={BikerImage}/>
       </View>
-
-
-
-      // <Masonry
-      //   ref="masonry"
-      //   columns={3} // optional - Default: 2
-      //   renderItem={(item) => <View>
-      //     <Text>some text</Text>
-      //   </View>}
-      // />
 
 
     );
@@ -87,4 +57,8 @@ const styles = StyleSheet.create({
     paddingLeft: 14,
     paddingRight: 14,
   },
+  img: {
+      width: '100%',
+      height: '100%'
+  }
 });

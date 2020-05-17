@@ -8,7 +8,6 @@ import {
   View, Dimensions, Button
 } from 'react-native';
 import UpdateNews from '../../components/UpdateNews/UpdateNews'
-import NewsListItemScreen from '../../screens/UpdateNewsScreens/NewsListItemScreen'
 import BikerImage from '../../assets/biker.jpg'
 import GirlBiker from '../../assets/girl_biker.jpg'
 import Suzuki from '../../assets/suzuki.jpg'
@@ -52,7 +51,7 @@ export default class UpdateNewsScreen extends React.Component {
           <UpdateNews news={item} onPress={() => navigation.navigate('NewsListItemScreen', {notificationTitle: item.notification}) }/>
         }
         keyExtractor={item => `${item.id}`}
-        // contentContainerStyle={ styles}
+        //contentContainerStyle={ {backgroundColor: 'red'}}
       />
     );
   }
