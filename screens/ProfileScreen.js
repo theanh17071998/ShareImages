@@ -7,8 +7,9 @@ import {
   Text,
   View,Dimensions
 } from 'react-native';
-import Profile from '../components/Profile'
+import Profile from '../components/profile/Profile'
 const deviceWidth = Dimensions.get('window').width;
+const screen = (percent) => deviceWidth.percent/100;  
 
 export default class ProfileScreen extends React.Component {
   static navigationOptions = ({navigation}) => {
