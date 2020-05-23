@@ -1,6 +1,10 @@
 import React from 'react'
 import {SearchBar} from 'react-native-elements'
-import { red } from 'color-name';
+import {Dimensions} from 'react-native'
+
+const deviceWidth = Dimensions.get('window').width;
+const screen = (percent) => percent * deviceWidth /100
+
 export default class Search extends React.Component {
     state = {
       search: '',
@@ -19,6 +23,7 @@ export default class Search extends React.Component {
           onChangeText={this.updateSearch}
           value={search}
           lightTheme
+          platform='android'
         />
       );
     }
