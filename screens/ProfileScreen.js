@@ -14,7 +14,7 @@ const screen = (percent) => deviceWidth.percent/100;
 export default class ProfileScreen extends React.Component {
   static navigationOptions = ({navigation}) => {
     return {
-        title:'Profile',
+        title:'Cá nhân',
         headerTitleAlign: 'center',
         headerTitleStyle: {
           color: 'white',

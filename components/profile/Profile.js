@@ -2,11 +2,13 @@ import React from 'react';
 import {
     View,
     StyleSheet,
-    Dimensions
+    Dimensions,
+    ScrollView
 } from 'react-native'
 import { Avatar, Text} from 'react-native-elements';
 import Search from '../profile/SearchBar';
 import PinFolder from '../profile/PinFolder'
+import image  from '../../assets/avatar.jpg'
 
 const deviceWidth = Dimensions.get('window').width;
 const screen = (percent) => percent*deviceWidth/100;
@@ -24,9 +26,7 @@ export default function Profile (){
            <Avatar
         rounded
         size="large"
-        source={{
-            uri:'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        }}
+        source={image}
         />
            </View>
        </View>
@@ -36,10 +36,16 @@ export default function Profile (){
         <View style={styles.search}>
             <Search/>
         </View>
-        <View>
-        <PinFolder/>
-        </View>
-
+            <ScrollView>
+                <View style={styles.lists}>
+                    <PinFolder/>
+                    <PinFolder/>
+                    <PinFolder/>
+                    <PinFolder/>
+                    <PinFolder/>
+                    <PinFolder/>
+                </View>
+            </ScrollView>
         </View>
        
     )
@@ -65,5 +71,14 @@ const styles = StyleSheet.create({
         width: screen(50),
         marginLeft: screen(25),
         marginTop: screen(3)
+    },
+    lists: {
+        display:'flex',
+        flexDirection: 'row',
+        width: screen(100),
+        flexWrap: 'wrap',
+        paddingLeft: screen(2),
+        paddingRight: screen(2),
+        justifyContent: 'space-between',
     }
 });

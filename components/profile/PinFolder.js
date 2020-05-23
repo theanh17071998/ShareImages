@@ -1,33 +1,27 @@
 import React from 'react'
-import { View, Text, Image, Dimensions} from 'react-native'
-import { Card, ListItem, Button, Icon } from 'react-native-elements'
+import { View, Text, Image, Dimensions, StyleSheet} from 'react-native'
+import { Tile } from 'react-native-elements';
+
+import image  from '../../assets/avatar.jpg'
 
 const deviceWidth = Dimensions.get('window').width;
 const screen = (percent) => percent * deviceWidth /100
 
-
-const folders = [
-    {
-       name: 'Truyện tranh',
-       avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
-    },
-   ]
 export default function PinFolder() {
-    return (
-        <Card containerStyle={{padding: 0}} >
-        {
-          folders.map((u, i) => {
-            return (
-              <ListItem
-                key={i}
-                roundAvatar
-                title={u.name}
-                avatar={{uri:u.avatar}}
-              />
-            );
-          })
-        }
-      </Card>
-    )
- 
+  return (
+   <View style={styles.container}>
+        <Tile
+    imageSrc={image}
+    title="Sách"
+    featured
+    caption="Thể loại sách yêu thích"
+    width={screen(47)}
+    />
+   </View>
+  )
 }
+const styles = StyleSheet.create({
+    container: {
+        paddingBottom: screen(2),
+    }
+})
