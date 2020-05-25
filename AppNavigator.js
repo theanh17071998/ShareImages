@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, Text, View, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator} from 'react-navigation-tabs';
 
@@ -9,35 +9,45 @@ import ProfileScreen from './screens/ProfileScreen'
 import UpdateNewsScreen from './screens/UpdateNewsScreen'
 
 import HomeIcon from './assets/home-run.png'
+import UserIcon from './assets/user.png'
+import SearchIcon from './assets/search.png'
+import NotiIcon from './assets/notification.png'
 
 const HomeStack = createStackNavigator({
     HomeScreen
 })
 HomeStack.navigationOptions = {
  tabBarLabel:'Home',
-    drawerIcon: () => (
-      <Image
-        source={HomeIcon}
-      />
-    )
+ tabBarIcon: tabInfo => {
+  return <Image style={{width:25, height:25}} source={HomeIcon}/>
+},
 }
 const SearchStack = createStackNavigator({
     SearchScreen
 })
 SearchStack.navigationOptions = {
-    tabBarLabel:'Seacrh'
+    tabBarLabel:'Seacrh',
+    tabBarIcon: tabInfo => {
+      return <Image style={{width:25, height:25}} source={SearchIcon}/>
+    },
    }
 const ProfileStack = createStackNavigator({
     ProfileScreen
 })
 ProfileStack.navigationOptions = {
-  tabBarLabel:'Profile'
+  tabBarLabel:'Profile',
+  tabBarIcon: tabInfo => {
+    return <Image style={{width:30, height:30}} source={UserIcon}/>
+  },
  }
  const UpdateNewsStack = createStackNavigator({
     UpdateNewsScreen
 })
 UpdateNewsStack.navigationOptions = {
-  tabBarLabel:'Update News'
+  tabBarLabel:'Notification',
+  tabBarIcon: tabInfo => {
+    return <Image style={{width:25, height:25}} source={NotiIcon}/>
+  },
  }
 
 const AppNavigator = createBottomTabNavigator({

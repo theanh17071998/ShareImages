@@ -1,11 +1,8 @@
 import React from 'react';
 import {
-  Image,
-  FlatList,
   ScrollView,
   StyleSheet,
-  Text,
-  View,Dimensions
+  Dimensions
 } from 'react-native';
 import UpdateNews from '../components/UpdateNews'
 const deviceWidth = Dimensions.get('window').width;
@@ -13,7 +10,7 @@ const deviceWidth = Dimensions.get('window').width;
 export default class UpdateNewsScreen extends React.Component {
   static navigationOptions = ({navigation}) => {
     return {
-        title:'Update News',
+        title:'Notication',
         headerTitleAlign: 'center',
         headerTitleStyle: {
           color: 'white',

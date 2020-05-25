@@ -7,7 +7,7 @@ import {
   Text,
   View,Dimensions
 } from 'react-native';
-import Topic from '../components/Home'
+import Topic from '../components/Home/Home'
 const deviceWidth = Dimensions.get('window').width;
 
 export default class HomeScreen extends React.Component {
