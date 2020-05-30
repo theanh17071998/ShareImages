@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Search from '../components/Search'
 const deviceWidth = Dimensions.get('window').width;
+const screen = (percent) => percent.deviceWidth/100;
 
 export default class SearchScreen extends React.Component {
   static navigationOptions = ({navigation}) => {
