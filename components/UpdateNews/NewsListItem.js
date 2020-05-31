@@ -3,7 +3,7 @@ import { Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function NewsListItem(props) {
 
-    const { news, onPress } = props;
+    const { listnews, onPress } = props;
     return (
         // <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
         //     <View style={styles.content}>

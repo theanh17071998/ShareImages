@@ -32,14 +32,28 @@ export default class NewsListItemScreen extends React.Component {
     };
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      "newsList": [
+        { "id": 1, "notification": "10 Biker Pins you might like", "img": BikerImage },
+        { "id": 2, "notification": "We think you might like this", "img": GirlBiker },
+        { "id": 3, "notification": "14 trending Pins about Vehicle", "img": Suzuki },
+        { "id": 4, "notification": "You might like this Pins", "img": BikerImage }
 
+      ]
+    };
+  }
  
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, news } = this.props;
+    console.log(`this.props.navigation' = ${JSON.stringify(this.props.navigation)}`);
+    let paramsFromNewsList = this.props.navigation.getParam('noti');
     return (
-      <View>
-          <Image style={styles.img} source={BikerImage}/>
+      <View style={styles.container}>
+          {/* <Text>name is: {paramsFromNewsList}</Text> */}
+          <Image style={styles.img} source={GirlBiker}/>
       </View>
 
 
@@ -51,14 +65,16 @@ export default class NewsListItemScreen extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: "row",
-    backgroundColor: "#fff",
+    // flex: 1,
+    alignItems: "center",
+    // justifyContent: "center",
+    backgroundColor: "white",
     paddingLeft: 14,
-    paddingRight: 14,
+    paddingRight: 14
   },
   img: {
-      width: '100%',
-      height: '100%'
+      width: '90%',
+      height: 200,
+      
   }
 });

@@ -49,13 +49,16 @@ export default class NewsListItemScreen extends React.Component {
 
   render() {
     const { navigation } = this.props;
+    let dataSendToDetails = {
+      name: "Kvz"
+    }
     return (
       <View>
         <FlatList
           data={this.state.newsList}
           //numColumns={2}
           renderItem={({ item }) =>
-            <NewsListItem news={item} onPress={() => this.props.navigation.navigate('ImageDetailsScreen')} />
+            <NewsListItem listnews={item} onPress={() => this.props.navigation.navigate('ImageDetailsScreen', {noti:item.id})} />
           }
           keyExtractor={item => `${item.id}`}
         // contentContainerStyle={ styles}
