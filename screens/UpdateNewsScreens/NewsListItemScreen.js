@@ -9,9 +9,7 @@ import {
   Dimensions,
   Button,
 } from "react-native";
-import Masonry from 'react-native-masonry-layout';
 import BikerImage from '../../assets/biker.jpg'
-
 import GirlBiker from '../../assets/girl_biker.jpg';
 import Suzuki from '../../assets/suzuki.jpg';
 import NewsListItem from '../../components/UpdateNews/NewsListItem';
@@ -42,13 +40,11 @@ export default class NewsListItemScreen extends React.Component {
         { "id": 2, "notification": "We think you might like this", "img": GirlBiker },
         { "id": 3, "notification": "14 trending Pins about Vehicle", "img": Suzuki },
         { "id": 4, "notification": "You might like this Pins", "img": BikerImage }
-
       ]
     };
   }
 
   render() {
-    const { navigation } = this.props;
     return (
       <View>
         <FlatList
@@ -58,21 +54,8 @@ export default class NewsListItemScreen extends React.Component {
             <NewsListItem news={item} onPress={() => this.props.navigation.navigate('ImageDetailsScreen')} />
           }
           keyExtractor={item => `${item.id}`}
-        // contentContainerStyle={ styles}
         />
       </View>
-
-
-
-      // <Masonry
-      //   ref="masonry"
-      //   columns={3} // optional - Default: 2
-      //   renderItem={(item) => <View>
-      //     <Text>some text</Text>
-      //   </View>}
-      // />
-
-
     );
   }
 

@@ -1,25 +1,24 @@
 import * as React from 'react';
-import { Button, Text, View, Image } from 'react-native';
+import { Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator} from 'react-navigation-tabs';
 
-import HomeScreen from './screens/HomeScreen'
+import HomeScreen from './screens/HomeScreen/HomeScreen'
+import ImageDetail from './screens/HomeScreen/ImageDetail'
 import SearchScreen from './screens/SearchScreens/SearchScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import UpdateNewsScreen from './screens/UpdateNewsScreens/UpdateNewsScreen'
+import NewsListItemScreen from './screens/UpdateNewsScreens/NewsListItemScreen'
+import ImageDetailsScreen from './screens/UpdateNewsScreens/ImageDetailsScreen'
 
 import HomeIcon from './assets/home-run.png'
-<<<<<<< HEAD
 import UserIcon from './assets/user.png'
 import SearchIcon from './assets/search.png'
 import NotiIcon from './assets/notification.png'
-=======
-import NewsListItemScreen from './screens/UpdateNewsScreens/NewsListItemScreen'
-import ImageDetailsScreen from './screens/UpdateNewsScreens/ImageDetailsScreen'
->>>>>>> c49e658c3351ebb4a755c102054281d6150def46
 
 const HomeStack = createStackNavigator({
-    HomeScreen
+    HomeScreen,
+    ImageDetail
 })
 HomeStack.navigationOptions = {
  tabBarLabel:'Home',
@@ -50,18 +49,12 @@ const UpdateNewsStack = createStackNavigator({
   NewsListItemScreen,
   ImageDetailsScreen
 })
-<<<<<<< HEAD
 UpdateNewsStack.navigationOptions = {
   tabBarLabel:'Notification',
   tabBarIcon: tabInfo => {
     return <Image style={{width:25, height:25}} source={NotiIcon}/>
   },
  }
-=======
-// UpdateNewsScreen.navigationOptions = {
-//   tabBarLabel: 'Update News'
-// }
->>>>>>> c49e658c3351ebb4a755c102054281d6150def46
 
 const AppNavigator = createBottomTabNavigator({
     HomeStack,

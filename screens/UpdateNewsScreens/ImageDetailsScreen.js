@@ -8,12 +8,7 @@ import {
   View,
   Dimensions,
 } from "react-native";
-import Masonry from 'react-native-masonry-layout';
 import BikerImage from '../../assets/biker.jpg'
-
-import GirlBiker from '../../assets/girl_biker.jpg';
-import Suzuki from '../../assets/suzuki.jpg';
-import NewsListItem from '../../components/UpdateNews/NewsListItem';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -32,22 +27,13 @@ export default class NewsListItemScreen extends React.Component {
     };
   };
 
-
- 
-
   render() {
-    const { navigation } = this.props;
     return (
       <View>
           <Image style={styles.img} source={BikerImage}/>
       </View>
-
-
     );
   }
-
-
-
 }
 const styles = StyleSheet.create({
   container: {

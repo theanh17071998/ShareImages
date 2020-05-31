@@ -5,7 +5,7 @@ import {
   View,Dimensions,
   Image
 } from 'react-native';
- import image from './../../assets/0abe4c2eb9a90433a2e88a36208527e9.jpg'
+ import image from './../../assets/image1.jpg'
 const deviceWidth = Dimensions.get('window').width;
 const screen = (percent) => deviceWidth * percent / 100;
 
