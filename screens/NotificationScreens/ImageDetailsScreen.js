@@ -13,7 +13,7 @@ import BikerImage from '../../assets/biker.jpg'
 
 import GirlBiker from '../../assets/girl_biker.jpg';
 import Suzuki from '../../assets/suzuki.jpg';
-import NewsListItem from '../../components/UpdateNews/NewsListItem';
+import NewsListItem from '../../components/Notification/NewsListItem';
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -44,15 +44,21 @@ export default class NewsListItemScreen extends React.Component {
       ]
     };
   }
- 
+
 
   render() {
     const { navigation, news } = this.props;
     console.log(`this.props.navigation' = ${JSON.stringify(this.props.navigation)}`);
     let paramsFromNewsList = this.props.navigation.getParam('noti');
+    let image;
+    for (let i = 0; i < this.newsList.length; i ++) {
+      if(newsList[i].id === paramsFromNewsList) {
+        image = newsList[i];
+      }
+    }
     return (
       <View style={styles.container}>
-          {/* <Text>name is: {paramsFromNewsList}</Text> */}
+          {/* <Text>name is: {image.id}</Text> */}
           <Image style={styles.img} source={GirlBiker}/>
       </View>
 

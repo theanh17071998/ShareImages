@@ -13,7 +13,7 @@ export default function NewsListItem(props) {
         // </TouchableOpacity>
         <View style={styles.imgContainer}>
             <TouchableOpacity onPress={onPress}>
-                <Image style={styles.img} source={news.img}></Image>
+                <Image style={styles.img} source={listnews.img}></Image>
             </TouchableOpacity>
         </View>
     )

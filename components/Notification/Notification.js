@@ -6,9 +6,9 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native'
-import NewsListItemScreen from '../../screens/UpdateNewsScreens/NewsListItemScreen'
+import NewsListItemScreen from '../../screens/NotificationScreens/NewsListItemScreen'
 
-export default function UpdateNews(props) {
+export default function Notification(props) {
     const { news, onPress } = props;
     return (
         <TouchableOpacity activeOpacity={0.5} onPress={onPress}>

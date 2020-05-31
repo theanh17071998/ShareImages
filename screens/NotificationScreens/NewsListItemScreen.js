@@ -14,7 +14,7 @@ import BikerImage from '../../assets/biker.jpg'
 
 import GirlBiker from '../../assets/girl_biker.jpg';
 import Suzuki from '../../assets/suzuki.jpg';
-import NewsListItem from '../../components/UpdateNews/NewsListItem';
+import NewsListItem from '../../components/Notification/NewsListItem';
 
 const deviceWidth = Dimensions.get("window").width;
 

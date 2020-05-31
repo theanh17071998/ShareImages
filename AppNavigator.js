@@ -7,9 +7,9 @@ import HomeScreen from './screens/HomeScreen/HomeScreen'
 import ImageDetail from './screens/HomeScreen/ImageDetail'
 import SearchScreen from './screens/SearchScreens/SearchScreen'
 import ProfileScreen from './screens/ProfileScreen'
-import UpdateNewsScreen from './screens/UpdateNewsScreens/UpdateNewsScreen'
-import NewsListItemScreen from './screens/UpdateNewsScreens/NewsListItemScreen'
-import ImageDetailsScreen from './screens/UpdateNewsScreens/ImageDetailsScreen'
+import UpdateNewsScreen from './screens/NotificationScreens/NotificationScreen'
+import NewsListItemScreen from './screens/NotificationScreens/NewsListItemScreen'
+import ImageDetailsScreen from './screens/NotificationScreens/ImageDetailsScreen'
 
 import HomeIcon from './assets/home-run.png'
 import UserIcon from './assets/user.png'
@@ -44,12 +44,12 @@ ProfileStack.navigationOptions = {
     return <Image style={{width:30, height:30}} source={UserIcon}/>
   },
  }
-const UpdateNewsStack = createStackNavigator({
+const NotificationStack = createStackNavigator({
   UpdateNewsScreen,
   NewsListItemScreen,
   ImageDetailsScreen
 })
-UpdateNewsStack.navigationOptions = {
+NotificationStack.navigationOptions = {
   tabBarLabel:'Notification',
   tabBarIcon: tabInfo => {
     return <Image style={{width:25, height:25}} source={NotiIcon}/>
@@ -60,7 +60,7 @@ const AppNavigator = createBottomTabNavigator({
     HomeStack,
     SearchStack,
     ProfileStack,
-    UpdateNewsStack
+    NotificationStack
 })
 
 export default AppNavigator;

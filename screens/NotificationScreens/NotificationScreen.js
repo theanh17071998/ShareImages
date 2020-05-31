@@ -7,15 +7,15 @@ import {
   Text,
   View, Dimensions, Button
 } from 'react-native';
-import UpdateNews from '../../components/UpdateNews/UpdateNews'
+import Notification from '../../components/Notification/Notification'
 import BikerImage from '../../assets/biker.jpg'
 
 const deviceWidth = Dimensions.get('window').width;
 
-export default class UpdateNewsScreen extends React.Component {
+export default class NotificationScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: 'Update News',
+      title: 'Notification',
       headerTitleAlign: 'center',
       headerTitleStyle: {
         color: 'white',
@@ -45,7 +45,7 @@ export default class UpdateNewsScreen extends React.Component {
       <FlatList 
         data={this.state.newsList}
         renderItem={({item}) =>
-          <UpdateNews news={item} onPress={() => navigation.navigate('NewsListItemScreen', {notificationTitle: item.notification}) }/>
+          <Notification news={item} onPress={() => navigation.navigate('NewsListItemScreen', {notificationTitle: item.notification}) }/>
         }
         keyExtractor={item => `${item.id}`}
       />
