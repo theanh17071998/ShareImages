@@ -9,9 +9,7 @@ import {
 } from 'react-native';
 import UpdateNews from '../../components/UpdateNews/UpdateNews'
 import BikerImage from '../../assets/biker.jpg'
-import GirlBiker from '../../assets/girl_biker.jpg'
-import Suzuki from '../../assets/suzuki.jpg'
-import { createStackNavigator } from 'react-navigation-stack';
+
 const deviceWidth = Dimensions.get('window').width;
 
 export default class UpdateNewsScreen extends React.Component {
@@ -37,7 +35,6 @@ export default class UpdateNewsScreen extends React.Component {
         { "id": 2, "notification": "We think you might like this", "img": BikerImage },
         { "id": 3, "notification": "14 trending Pins about Vehicle", "img": BikerImage },
         { "id": 4, "notification": "You might like this Pins", "img": BikerImage }
-
       ]
     };
   }
@@ -51,7 +48,6 @@ export default class UpdateNewsScreen extends React.Component {
           <UpdateNews news={item} onPress={() => navigation.navigate('NewsListItemScreen', {notificationTitle: item.notification}) }/>
         }
         keyExtractor={item => `${item.id}`}
-        //contentContainerStyle={ {backgroundColor: 'red'}}
       />
     );
   }
