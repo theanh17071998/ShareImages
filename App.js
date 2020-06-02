@@ -1,23 +1,37 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import {createAppContainer} from 'react-navigation'
+import React, { useState } from 'react';
+import { Button, View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { AsyncStorage } from 'react-native';
 
-import AppNavigator from './AppNavigator'
 
+import LoginScreen from './screens/LoginScreen'
+import HomeScreen from './screens/HomeScreen'
 
-const AppContainer = createAppContainer(AppNavigator)
+AsyncStorage.setItem('isLogin', 'true')
 
-export default class App extends React.Component{
- render(){
-  return <AppContainer/>
- }
+const Stack = createStackNavigator();
+
+function App() {
+
+  const [isLogin, setIsLogin] = useState('false')
+
+  return (
+    (isLogin == 'true') ? (
+      <>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen name="Home" component={HomeScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </>
+    ) : (
+      <>
+        <View>
+          <LoginScreen />
+        </View>
+      </>
+    )
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
