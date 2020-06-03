@@ -9,20 +9,22 @@ import {
 } from 'react-native';
 import Notification from '../../components/Notification/Notification'
 import BikerImage from '../../assets/biker.jpg'
+import GirlBiker from '../../assets/girl_biker.jpg';
+import Suzuki from '../../assets/suzuki.jpg';
 
 const deviceWidth = Dimensions.get('window').width;
 
 export default class NotificationScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: 'Notification',
+      title: 'Thông báo',
       headerTitleAlign: 'center',
       headerTitleStyle: {
-        color: 'white',
+        color: 'black',
       },
-      headerTintColor: 'white',
+      headerTintColor: 'black',
       headerStyle: {
-        backgroundColor: '#006265',
+        backgroundColor: 'white',
       },
     };
   };
@@ -32,8 +34,8 @@ export default class NotificationScreen extends React.Component {
     this.state = {
       "newsList": [
         { "id": 1, "notification": "10 Biker Pins you might like", "img": BikerImage },
-        { "id": 2, "notification": "We think you might like this", "img": BikerImage },
-        { "id": 3, "notification": "14 trending Pins about Vehicle", "img": BikerImage },
+        { "id": 2, "notification": "We think you might like this", "img": GirlBiker },
+        { "id": 3, "notification": "14 trending Pins about Vehicle", "img": Suzuki },
         { "id": 4, "notification": "You might like this Pins", "img": BikerImage }
       ]
     };

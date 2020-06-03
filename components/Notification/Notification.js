@@ -1,29 +1,33 @@
 import React from 'react';
-import {
-    Image,
-    Text,
-    View,
-    StyleSheet,
-    TouchableOpacity
-} from 'react-native'
+import { Image, Text, View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
 import NewsListItemScreen from '../../screens/NotificationScreens/NewsListItemScreen'
+import { FlatList } from 'react-native-gesture-handler';
+
+const deviceWidth = Dimensions.get('window').width;
+const screen = (percent) => percent * deviceWidth /100;
 
 export default function Notification(props) {
     const { news, onPress } = props;
     return (
-        <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
-            <View style={styles.content}>
-                <Text style={styles.imgText}>{news.notification}</Text>
+        <View>
+            <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
+                <View style={styles.content}>
+                    <Text style={styles.imgText}>{news.notification}</Text>
+                    <Text style={styles.imgTime}>19 giờ</Text>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
                 <View style={styles.imgContainer}>
                     <Image style={styles.img} source={news.img}></Image>
                     <Image style={styles.img} source={news.img}></Image>
                     <Image style={styles.img} source={news.img}></Image>
+                    {/* <FlatList 
+                        data
+                    /> */}
                 </View>
-                
-            </View>
-        </TouchableOpacity>
+            </TouchableOpacity>
+        </View>
     )
-
 }
 const styles = StyleSheet.create({
     container: {
@@ -45,7 +49,12 @@ const styles = StyleSheet.create({
     imgText: {
         fontSize: 17,
         marginLeft: 15,
-        marginBottom: 15
+        // marginBottom: 15
+    },
+    imgTime: {
+        fontWeight: "200",
+        marginLeft: 15,
+        fontSize: screen(4)
     },
     imgContainer: {
         flexDirection: 'row',
