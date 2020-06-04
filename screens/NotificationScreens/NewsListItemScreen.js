@@ -29,10 +29,10 @@ const data = [
     uri: "https://vnn-imgs-f.vgcloud.vn/2018/03/08/16/nu-phuot-thu-7.jpg"
 },
   {
-    uri: "https://motosaigon.vn/wp-content/uploads/2019/07/nu-biker-cuoi-ducati-panigale-v4-iron-man-motosaigon-1-1.jpg"
+    uri: "https://motosaigon.vn/wp-content/uploads/2016/12/959-Panigale-Ducati-nu-biker-iron-man-motosaigon-4.jpg"
 },
   {
-    uri: "https://motosaigon.vn/wp-content/uploads/2016/12/959-Panigale-Ducati-nu-biker-iron-man-motosaigon-4.jpg"
+    uri: "https://motosaigon.vn/wp-content/uploads/2019/07/nu-biker-cuoi-ducati-panigale-v4-iron-man-motosaigon-1-1.jpg"
 },
   {
     uri: "https://media.gettyimages.com/photos/portrait-of-mature-male-motorcyclist-on-arid-plain-cagliari-sardinia-picture-id521980023?s=612x612"
@@ -47,7 +47,7 @@ const data = [
     uri: "https://caphemoingay.com/wp-content/uploads/iamges/2020/01/10/349350708403.jpg"
 },
   {
-    uri: "https://lh3.googleusercontent.com/proxy/c-FjP5w_vjjL1UqXa4myGUZnrIbhwEq6e-2pYhJYqtqmukt-0Qg6gAS6QaRHgtaJe91xLqYsC1uRZZJGZ1v5_0ZoAj0Lk1paP_KZZ5QjaagvbO1XW-dIaIiJWYVpCoJCST7yRhmjCidtRHq8c3YxvfcjRr6I"
+    uri: "https://pro-biker.vn/image/cache/data/bao-tay/Bao-tay-probiker-dai-den-3-800x800.jpg"
 },
   {
     uri: "https://media.sohuutritue.net.vn/resize/500x333/files/huongmi/2018/03/08/doan-trang-1203.jpeg"
