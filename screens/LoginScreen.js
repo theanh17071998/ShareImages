@@ -11,17 +11,11 @@ function LoginScreen(props) {
     return () => setScreenName(type)
   }
 
-  const { loginSuccess } = props.onLoginSuccess
-
-  const loginSuccess1 = (isLogin) => {
-    return () => loginSuccess(isLogin)()
-  }
-
   return (
     <View style={{ height: '100%' }}>
       {
         screenName == 'Login' ? (
-          <LoginComponent onChangeScreen={{ changeScreen, loginSuccess1 }} />
+          <LoginComponent onChangeScreen={{ changeScreen }} />
         ) : (
           <SignupComponent onChangeScreen={{ changeScreen }} />
         )

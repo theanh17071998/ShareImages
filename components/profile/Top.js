@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Button, Image, View, StyleSheet, TouchableOpacity, Text, DevSettings } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 import Constants from 'expo-constants'
-import CodePush from 'react-native-code-push'
+import UserContext from '../../contexts/UserContext'
 
 function Avartar() {
   const [image, setImage] = useState(null)
@@ -16,7 +16,7 @@ function Avartar() {
         }
       }
     })()
-  }, [])
+  })
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -45,6 +45,11 @@ function Avartar() {
 }
 
 function Info() {
+  const { socket } = useContext(UserContext) // useContext(UserContext) tra ve value
+  const { idUser } = useContext(UserContext)
+  const handleLogout = () => {
+    socket.emit('clientLogout', idUser)
+  }
   return (
     <View>
       <View>
@@ -64,7 +69,7 @@ function Info() {
         <Button title="12 Follower" />
       </View>
       <View style={{ marginBottom: 1, marginTop: 4 }}>
-        <Button title="Logout" color="tomato" onPress={ () => DevSettings.reload() } />
+        <Button title="Logout" color="tomato" onPress={ () => handleLogout() } />
       </View>
     </View>
   )

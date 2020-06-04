@@ -1,7 +1,8 @@
 // import * as React from 'react'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, Text, StyleSheet, Image, Alert, ScrollView } from 'react-native'
 import { AsyncStorage } from 'react-native'
+import UserContext from '../../contexts/UserContext'
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { Input, Button, Modal } from 'react-native-elements'
@@ -10,12 +11,14 @@ import { API } from '../../constants/api'
 import { postMethod, jsonHeader } from '../../constants/fetchTool'
 
 function Login(props) {
+  const { socket } = useContext(UserContext)
+  const { idUser } = useContext(UserContext)
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isCorrectPassword, setIsCorrectPassword] = useState(true)
   const [isCorrectUsername, setIsCorrectUsername] = useState(true)
-  const { changeScreen, loginSuccess1 } = props.onChangeScreen
+  const { changeScreen } = props.onChangeScreen
   const alertForgotPassword = () => {
     Alert.alert(
       "FORGOT PASSWORD",
@@ -47,7 +50,8 @@ function Login(props) {
         setIsLoading(false)
         if (res.code == 200) {
           AsyncStorage.setItem('user', JSON.stringify(res.data.user))
-          loginSuccess1(true)()
+          console.log(idUser)
+          socket.emit('clientLogin', idUser)
         } else {
           setIsCorrectUsername(res.data.status.isCorrectUsername)
           setIsCorrectPassword(res.data.status.isCorrectPassword)
