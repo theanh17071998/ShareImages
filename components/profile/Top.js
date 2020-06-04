@@ -1,0 +1,96 @@
+import React, { useState, useEffect } from 'react'
+import { Button, Image, View, StyleSheet, TouchableOpacity, Text, DevSettings } from 'react-native'
+import * as ImagePicker from 'expo-image-picker'
+import Constants from 'expo-constants'
+import CodePush from 'react-native-code-push'
+
+function Avartar() {
+  const [image, setImage] = useState(null)
+  const [srcImage, setSrcImage] = useState('https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png')
+  useEffect(() => {
+    (async () => {
+      if (Constants.platform.ios) {
+        const { status } = await ImagePicker.requestCameraRollPermissionsAsync()
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!')
+        }
+      }
+    })()
+  }, [])
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1
+    })
+    result.uri ? setSrcImage(result.uri) : console.log('Cancel')
+    if (!result.cancelled) {
+      setImage(result.uri)
+    }
+  }
+
+  return (
+    <View style={styles.avatar}>
+      <TouchableOpacity onPress={pickImage} >
+        <Image
+          source={{ uri: srcImage }}
+          style={{ width: 120, height: 120, borderRadius: 9999, borderColor: 'tomato', borderWidth: 4 }} 
+          onClick={pickImage}
+        />
+      </TouchableOpacity>
+    </View>
+  )
+}
+
+function Info() {
+  return (
+    <View>
+      <View>
+        <Text style={{
+          fontSize: 20,
+          color: 'tomato',
+          fontWeight: 'bold',
+          overflow: "hidden"
+        }}>{ ('Nguyễn Ngọc Hải'.length > 20) ? 
+          (('Nguyễn Ngọc Hải'.substring(0,20-3)) + '...') : 
+          'Nguyễn Ngọc Hải' }</Text>
+      </View>
+      <View style={{ marginBottom: 4, marginTop: 7 }}>
+        <Button title="27 Following" />
+      </View>
+      <View>
+        <Button title="12 Follower" />
+      </View>
+      <View style={{ marginBottom: 1, marginTop: 4 }}>
+        <Button title="Logout" color="tomato" onPress={ () => DevSettings.reload() } />
+      </View>
+    </View>
+  )
+}
+
+
+function TopProfile(props) {
+  return (
+    <View style={styles.container}>
+      <Avartar />
+      <Info />
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 40,
+    padding: 10,
+    flexDirection: 'row'
+  },
+  avatar: {
+    marginRight: 10,
+    top: 18
+  }
+})
+
+
+export default TopProfile

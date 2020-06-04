@@ -1,25 +1,67 @@
-// import * as React from 'react';
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, Alert, ScrollView } from 'react-native';
-import { AsyncStorage } from 'react-native';
+// import * as React from 'react'
+import React, { useState, useEffect } from 'react'
+import { View, Text, StyleSheet, Image, Alert, ScrollView } from 'react-native'
+import { AsyncStorage } from 'react-native'
 
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input, Button, Modal } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome'
+import { Input, Button, Modal } from 'react-native-elements'
+import { hash256 } from '../../constants/common'
+import { API } from '../../constants/api'
+import { postMethod, jsonHeader } from '../../constants/fetchTool'
+
+
+
+
 function Login(props) {
 
   const [userName, setUserName] = useState('')
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('')
   const [rePassword, setRePassword] = useState('')
-  const [fullName, setFullName] = useState('');
-  const { changeScreen } = props.onChangeScreen;
+  const [fullName, setFullName] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [isCorrectPassword, setIsCorrectPassword] = useState(false)
+  const [isCorrectUsername, setIsCorrectUsername] = useState(false)
+  
+  const { changeScreen } = props.onChangeScreen
 
   const clickSignup = () => {
-    console.log({
-      fullName: fullName,
-      userName: userName,
-      password: password,
-      rePassword: rePassword
-    })
+    setIsLoading(true)
+    const newPassword = (password.length > 1024) ? hash256(password.substring(0, 1024)) : hash256(password)
+    if (rePassword != password) {
+      setIsLoading(false)
+      return
+    }
+    fetch(API.REGISTER, {
+      method: postMethod.method,
+      headers: jsonHeader.headers,
+      body: JSON.stringify({
+        userName: userName,
+        password: newPassword,
+        fullName: fullName
+      })
+    }).then(response => response.json())
+      .then((res) => {
+        setIsLoading(false)
+        if (res.code == 200) {
+          Alert.alert(
+            res.title.toUpperCase(),
+            res.data.message,
+            [
+              {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+              },
+              { text: "TO LOGIN", onPress: () => changeScreen('Login')() }
+            ],
+            { cancelable: false }
+          )
+        } else {
+          setIsCorrectUsername(res.data.status.isCorrectUsername)
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
   }
 
   return (
@@ -40,8 +82,6 @@ function Login(props) {
         <View style={{ paddingTop: 40 }}>
           <Input
             placeholder='Nguyễn Ngọc Hải'
-            errorStyle={{ color: 'red' }}
-            errorMessage={ 1 ? 'INVALID NAME' : '' }
             label='Your Full Name'
             leftIcon={
               <Icon
@@ -56,7 +96,7 @@ function Login(props) {
           <Input
             placeholder='email@address.com / hainn'
             errorStyle={{ color: 'red' }}
-            errorMessage={ 1 ? 'INVALID EMAIL ADDRESS OR USERNAME' : '' }
+            errorMessage={ isCorrectUsername ? 'EMAIL ADDRESS OR USERNAME ALREADY EXISTS' : '' }
             label='Your Email Address / Username'
             leftIcon={
               <Icon
@@ -70,7 +110,7 @@ function Login(props) {
           />
           <Input placeholder="***********" secureTextEntry={true}
             errorStyle={{ color: 'red' }}
-            errorMessage={ 1 ? 'INVALID PASSWORD' : '' }
+            errorMessage={ isCorrectPassword ? 'INVALID PASSWORD' : '' }
             label='Your Password'
             leftIcon={
               <Icon
@@ -84,7 +124,7 @@ function Login(props) {
           />
           <Input placeholder="***********" secureTextEntry={true}
             errorStyle={{ color: 'red' }}
-            errorMessage={ 1 ? 'REPEAT PASSWORD DOES NOT MATCH' : '' }
+            errorMessage={ rePassword !== password ? 'REPEAT PASSWORD DOES NOT MATCH' : '' }
             label='Repeat Your Password'
             leftIcon={
               <Icon
@@ -96,21 +136,30 @@ function Login(props) {
             value={rePassword}
             onChangeText={ (rePassword) => { setRePassword(rePassword) } }
           />
-          <Button
-            title="SIGN UP"
-            buttonStyle={{ backgroundColor: '#6dab3c', height: 60 }}
-            onPress={ clickSignup }
-          />
+          {
+            isLoading ? (
+              <Button
+                loading={isLoading}              
+                buttonStyle={{ backgroundColor: '#6dab3c', height: 60 }}
+              />
+            ) : (
+              <Button
+                title="SIGN UP"
+                buttonStyle={{ backgroundColor: '#6dab3c', height: 60 }}
+                onPress={ clickSignup }
+              />
+            )
+          }
         </View>
         <View style={{ padding: 5, paddingTop: 20 }}>
           <Text>Already have an account?
-            <Text onPress={ changeScreen('Login') } style={{ textDecorationLine: "underline", color: '#1890ff' }}> Login NOW</Text>
+            <Text onPress={ () => changeScreen('Login')() } style={{ textDecorationLine: "underline", color: '#1890ff' }}> Login NOW</Text>
           </Text>
         </View>
       </View>
     </View>
     </ScrollView>
-  );
+  )
 }
 
 
@@ -135,4 +184,4 @@ const styles = StyleSheet.create({
 
 
 
-export default Login;
+export default Login

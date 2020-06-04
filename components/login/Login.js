@@ -1,17 +1,21 @@
-// import * as React from 'react';
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, Alert, ScrollView } from 'react-native';
-import { AsyncStorage } from 'react-native';
+// import * as React from 'react'
+import React, { useState, useEffect } from 'react'
+import { View, Text, StyleSheet, Image, Alert, ScrollView } from 'react-native'
+import { AsyncStorage } from 'react-native'
 
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input, Button, Modal } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome'
+import { Input, Button, Modal } from 'react-native-elements'
+import { hash256 } from '../../constants/common'
+import { API } from '../../constants/api'
+import { postMethod, jsonHeader } from '../../constants/fetchTool'
+
 function Login(props) {
-
   const [userName, setUserName] = useState('')
-  const [password, setPassword] = useState('');
-
-  const { changeScreen } = props.onChangeScreen;
-
+  const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [isCorrectPassword, setIsCorrectPassword] = useState(true)
+  const [isCorrectUsername, setIsCorrectUsername] = useState(true)
+  const { changeScreen, loginSuccess1 } = props.onChangeScreen
   const alertForgotPassword = () => {
     Alert.alert(
       "FORGOT PASSWORD",
@@ -25,14 +29,33 @@ function Login(props) {
         { text: "OK", onPress: () => console.log("OK Pressed") }
       ],
       { cancelable: false }
-    );
+    )
   }
 
   const clickLogin = () => {
-    console.log({
-      userName: userName,
-      password: password
-    })
+    const newPassword = (password.length > 1024) ? hash256(password.substring(0, 1024)) : hash256(password)
+    setIsLoading(true)
+    fetch(API.LOGIN, {
+      headers: jsonHeader.headers,
+      method: postMethod.method,
+      body: JSON.stringify({
+        password: newPassword,
+        userName: userName
+      })
+    }).then(response => response.json())
+      .then((res) => {
+        setIsLoading(false)
+        if (res.code == 200) {
+          AsyncStorage.setItem('user', JSON.stringify(res.data.user))
+          loginSuccess1(true)()
+        } else {
+          setIsCorrectUsername(res.data.status.isCorrectUsername)
+          setIsCorrectPassword(res.data.status.isCorrectPassword)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   return (
@@ -81,7 +104,7 @@ function Login(props) {
           <Input
             placeholder='email@address.com / hainn'
             errorStyle={{ color: 'red' }}
-            errorMessage={ 1 ? 'INVALID EMAIL ADDRESS OR USERNAME' : '' }
+            errorMessage={ !isCorrectUsername ? 'INVALID EMAIL ADDRESS OR USERNAME' : '' }
             label='Your Email Address / Username'
             leftIcon={
               <Icon
@@ -96,7 +119,7 @@ function Login(props) {
           <Input placeholder="*********" secureTextEntry={true}
             label='Your Password'
             errorStyle={{ color: 'red' }}
-            errorMessage={ 1 ? 'INVALID PASSWORD' : '' }
+            errorMessage={ !isCorrectPassword ? 'INVALID PASSWORD' : '' }
             leftIcon={
               <Icon
                 name='lock'
@@ -110,20 +133,29 @@ function Login(props) {
           <View style={{ padding: 5, paddingBottom: 20 }}>
             <Text onPress={ alertForgotPassword } style={{ textDecorationLine: "underline", color: '#1890ff' }}>Forgot NOW?</Text>
           </View>
-          <Button
-            title="LOGIN"
-            buttonStyle={{ backgroundColor: '#6dab3c', height: 60 }}
-            onPress={ clickLogin }
-          />
+          {
+            isLoading ? (
+              <Button
+                loading={isLoading}              
+                buttonStyle={{ backgroundColor: '#6dab3c', height: 60 }}
+              />
+            ) : (
+              <Button
+                title="LOGIN"
+                buttonStyle={{ backgroundColor: '#6dab3c', height: 60 }}
+                onPress={ clickLogin }
+              />
+            )
+          }
         </View>
         <View style={{ padding: 5, paddingTop: 20 }}>
           <Text>Not a member?
-            <Text onPress={ changeScreen('Signup') } style={{ textDecorationLine: "underline", color: '#1890ff' }}> Sign up NOW</Text>
+            <Text onPress={ () => changeScreen('Signup')() } style={{ textDecorationLine: "underline", color: '#1890ff' }}> Sign up NOW</Text>
           </Text>
         </View>
       </View>
     </View>
-  );
+  )
 }
 
 
@@ -146,4 +178,4 @@ const styles = StyleSheet.create({
 
 
 
-export default Login;
+export default Login

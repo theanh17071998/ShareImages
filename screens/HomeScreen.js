@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react'
 import { Button, View, Text } from 'react-native'
 
 function LoginScreen() {
@@ -6,7 +6,7 @@ function LoginScreen() {
     <View>
       <Text>Home Screen</Text>
     </View>
-  );
+  )
 }
 
-export default LoginScreen;
+export default LoginScreen
