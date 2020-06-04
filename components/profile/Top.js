@@ -87,9 +87,10 @@ function TopProfile(props) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
     padding: 10,
-    flexDirection: 'row'
+    paddingTop: 35,
+    flexDirection: 'row',
+    backgroundColor: '#2089dc66'
   },
   avatar: {
     marginRight: 10,

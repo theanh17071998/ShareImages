@@ -25,8 +25,7 @@ const idUser = new Date().getTime() + Math.floor(Math.random() * 220998271299).t
 const socket = socketIOClient(ENDPOINT, {
   query: {
     name: idUser
-  },
-  forceNew: true
+  }
 })
 
 let number = 271299
