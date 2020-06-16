@@ -15,6 +15,7 @@ YellowBox.ignoreWarnings(['Remote debugger']);
 import LoginScreen from './screens/LoginScreen'
 import HomeScreen from './screens/HomeScreen'
 import ProfileScreen from './screens/ProfileScreen'
+import SearchScreen from './screens/SearchScreen'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -59,7 +60,7 @@ function App() {
     number++
   }
   return (
-    user ? (
+    // user ? (
       <UserProvider value={{socket, idUser}}>
         <NavigationContainer>
           <Tab.Navigator 
@@ -104,7 +105,7 @@ function App() {
               {
                 () => (
                   <Drawer.Navigator initialRouteName="Home2">
-                    <Drawer.Screen name="Home2" component={HomeScreen} />
+                    <Drawer.Screen name="Home2" component={SearchScreen} />
                   </Drawer.Navigator>
                 )
               }
@@ -122,13 +123,13 @@ function App() {
           </Tab.Navigator>
         </NavigationContainer>
       </UserProvider>
-    ) : (
-      <UserProvider value={{ socket, idUser }}>
-        <View>
-          <LoginScreen />
-        </View>
-      </UserProvider>
-    )
+  //   ) : (
+  //     <UserProvider value={{ socket, idUser }}>
+  //       <View>
+  //         <LoginScreen />
+  //       </View>
+  //     </UserProvider>
+  //   )
   )
 }
 export default App

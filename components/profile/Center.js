@@ -68,7 +68,6 @@ function CenterProfile(props) {
                   <TouchableOpacity onPress={ () => console.log(i)}>
                     <ImageItem url={url} />
                   </TouchableOpacity>
-                  
                 )
               })
             }

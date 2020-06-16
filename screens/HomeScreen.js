@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Button, View, Text } from 'react-native'
+import {View, Text } from 'react-native'
 
-function LoginScreen() {
+function HomeScreen({navigation}) {
   return (
     <View>
       <Text>Home Screen</Text>
@@ -9,4 +9,4 @@ function LoginScreen() {
   )
 }
 
-export default LoginScreen
+export default HomeScreen
