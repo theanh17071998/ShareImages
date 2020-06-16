@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Button, Image, View, StyleSheet, TouchableOpacity, Text, DevSettings } from 'react-native'
+import { Button, Image, View, StyleSheet, TouchableOpacity, Text, DevSettings, Dimensions } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 import Constants from 'expo-constants'
 import UserContext from '../../contexts/UserContext'
+const windowWidth = Dimensions.get('window').width;
+const screenWidth = (percent) => (windowWidth * percent)/ 100;
+const windowHeight = Dimensions.get('window').height;
+const screenHeight = (percent) => (windowHeight * percent)/ 100
 
 function Avartar() {
   const [image, setImage] = useState(null)
@@ -79,7 +83,7 @@ function Info() {
 function TopProfile(props) {
   return (
     <View style={styles.container}>
-      <Avartar />
+      <Avartar/>
       <Info />
     </View>
   )
@@ -87,10 +91,12 @@ function TopProfile(props) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: screenWidth(2),
     paddingTop: 35,
     flexDirection: 'row',
-    backgroundColor: '#2089dc66'
+    backgroundColor: '#2089dc66',
+    marginHorizontal: screenWidth(2),
+    marginTop: screenWidth(2)
   },
   avatar: {
     marginRight: 10,

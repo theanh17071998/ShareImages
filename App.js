@@ -15,6 +15,8 @@ YellowBox.ignoreWarnings(['Remote debugger']);
 import LoginScreen from './screens/LoginScreen'
 import HomeScreen from './screens/HomeScreen'
 import ProfileScreen from './screens/ProfileScreen'
+import SearchScreen from './screens/SearchScreen'
+import NotificationScreen from './screens/NotificationScreen'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -104,7 +106,7 @@ function App() {
               {
                 () => (
                   <Drawer.Navigator initialRouteName="Home2">
-                    <Drawer.Screen name="Home2" component={HomeScreen} />
+                    <Drawer.Screen name="Home2" component={SearchScreen} />
                   </Drawer.Navigator>
                 )
               }
@@ -113,7 +115,7 @@ function App() {
               {
                 () => (
                   <Drawer.Navigator initialRouteName="Home2">
-                    <Drawer.Screen name="Home2" component={HomeScreen} />
+                    <Drawer.Screen name="Home2" component={NotificationScreen} />
                   </Drawer.Navigator>
                 )
               }

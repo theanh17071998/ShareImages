@@ -5,7 +5,11 @@ import * as ImagePicker from 'expo-image-picker'
 import Constants from 'expo-constants'
 import UserContext from '../../contexts/UserContext'
 import ImageItem from './ImageItem'
+
 const windowWidth = Dimensions.get('window').width;
+const screenWidth = (percent) => (windowWidth * percent)/ 100;
+const windowHeight = Dimensions.get('window').height;
+const screenHeight = (percent) => (windowHeight * percent)/ 100
 
 import { Container, Header, Item, Input, Icon } from 'native-base';
 
@@ -68,7 +72,6 @@ function CenterProfile(props) {
                   <TouchableOpacity onPress={ () => console.log(i)}>
                     <ImageItem url={url} />
                   </TouchableOpacity>
-                  
                 )
               })
             }
@@ -81,7 +84,7 @@ function CenterProfile(props) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10
+    padding: screenWidth(2)
   }
 })
 
