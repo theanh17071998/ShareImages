@@ -59,7 +59,7 @@ function App() {
     number++
   }
   return (
-    user ? (
+    // user ? (
       <UserProvider value={{socket, idUser}}>
         <NavigationContainer>
           <Tab.Navigator 
@@ -122,13 +122,13 @@ function App() {
           </Tab.Navigator>
         </NavigationContainer>
       </UserProvider>
-    ) : (
-      <UserProvider value={{ socket, idUser }}>
-        <View>
-          <LoginScreen />
-        </View>
-      </UserProvider>
-    )
+    // ) : (
+    //   <UserProvider value={{ socket, idUser }}>
+    //     <View>
+    //       <LoginScreen />
+    //     </View>
+    //   </UserProvider>
+    // )
   )
 }
 export default App

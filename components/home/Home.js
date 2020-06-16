@@ -68,7 +68,7 @@ export default class Home extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>homeeeeeeee</Text>
+        <Text>home</Text>
         <MasonryList
           columns={2}
           sorted={true}
