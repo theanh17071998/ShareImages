@@ -11,6 +11,7 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Icon, Button } from 'react-native-elements'
 import Comments from '../search/comment'
+
 import image from '../../assets/b72e2df60fbc06a54ff1e98cc79a1f7c.jpg'
 
 
@@ -20,13 +21,19 @@ const windowHeight = Dimensions.get('window').height;
 const screenHeight = (percent) => (windowHeight * percent)/ 100
 
 function FullScreen(props) {
+
+    const clickBack = () => {
+        props.clickBack()
+    }
+
     return (
         <View style={styles.container}>
             <Header
-                  leftComponent={{ icon: 'chevron-left', color: '#fff' }}
+                  leftComponent={{ icon: 'chevron-left', color: '#fff', onPress: () => {clickBack()}}}
                   centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
                   rightComponent={{ icon: 'home', color: '#fff' }}
                   containerStyle={{height: screenHeight(10), marginTop: -10}}
+                
             />
             <View>
                 <ScrollView style={styles.scrollView}>
@@ -50,7 +57,6 @@ function FullScreen(props) {
                     </Card>
                     <Comments/>
                 </ScrollView>
-                 
             </View>
         </View>
 

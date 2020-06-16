@@ -32,12 +32,9 @@ const list = [
   ]
 export default function Notification() {
     return (
-      
       <View>
           <Header
-            leftComponent={{ icon: 'chevron-left', color: '#fff' }}
             centerComponent={{ text: 'THÔNG BÁO', style: { color: '#fff' } }}
-            rightComponent={{ icon: 'home', color: '#fff' }}
             containerStyle={{height: screenHeight(10), marginTop: -10}}
           />
         <View style={styles.listItem}>

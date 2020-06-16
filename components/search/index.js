@@ -6,21 +6,29 @@ import { exp, block } from 'react-native-reanimated'
 import Topic from './Topic'
 import GridImage from './GridImage'
 import FullScreen from './FullScreen'
+import { API } from '../../constants/api'
+import { postMethod, jsonHeader } from '../../constants/fetchTool'
 
 function Search() {
 
     const [clickedImage, setClick] = useState(false)
     const [objectImage, setObjectImage] = useState()
     const { height, width } = Dimensions.get('window')
+    const [clickback, setClickBack] = useState(false)
 
     const listenClickImage = (object) => {
         setObjectImage(object)
         setClick(true)
-        console.log(object)
+    }
+
+    const listenClickBack =  () => {
+        setClickBack(true)
+        setClick(false)
     }
 
     return (
         clickedImage == false ? (
+    
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <View style={styles.containerTitle}>
                     <Text style={styles.userName}>Hi, Hoàng Nam!</Text>
@@ -51,14 +59,17 @@ function Search() {
                                 <Topic imageUrl={require('../../assets/b72e2df60fbc06a54ff1e98cc79a1f7c.jpg')} name='Gái xinh' />
                                 <Topic imageUrl={require('../../assets/b72e2df60fbc06a54ff1e98cc79a1f7c.jpg')} name='Gái xinh' />
                                 <Topic imageUrl={require('../../assets/b72e2df60fbc06a54ff1e98cc79a1f7c.jpg')} name='Gái xinh' />
+                                <Topic imageUrl={require('../../assets/b72e2df60fbc06a54ff1e98cc79a1f7c.jpg')} name='Gái xinh' />
+                                <Topic imageUrl={require('../../assets/b72e2df60fbc06a54ff1e98cc79a1f7c.jpg')} name='Gái xinh' />
+                                <Topic imageUrl={require('../../assets/b72e2df60fbc06a54ff1e98cc79a1f7c.jpg')} name='Gái xinh' />
                             </ScrollView>
                         </View>
                     </View>
                 </ScrollView>
-                <GridImage click={listenClickImage} />
+                <GridImage click={listenClickImage} clickBack={listenClickBack} />
             </ScrollView>
-            ) : (
-                <FullScreen/>
+        ) : (
+                <FullScreen clickBack={listenClickBack} imageLink={objectImage} />
             )
 
     )
@@ -78,8 +89,9 @@ var styles = StyleSheet.create({
 
     },
     container: {
-        marginTop: 40,
-        margin: 20,
+        paddingBottom: 20, 
+        paddingLeft: 20,
+        paddingRight: 20
     },
     topicContainer: {
         height: 130,

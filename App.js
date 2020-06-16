@@ -10,7 +10,7 @@ const ENDPOINT = "http://192.168.23.102:3000";
 import { AsyncStorage } from 'react-native'
 import { UserProvider } from './contexts/UserContext'
 
-YellowBox.ignoreWarnings(['Remote debugger']);
+console.disableYellowBox = true; 
 
 import LoginScreen from './screens/LoginScreen'
 import HomeScreen from './screens/HomeScreen'
@@ -133,4 +133,6 @@ function App() {
     // )
   )
 }
+
+
 export default App

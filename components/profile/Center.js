@@ -5,35 +5,78 @@ import * as ImagePicker from 'expo-image-picker'
 import Constants from 'expo-constants'
 import UserContext from '../../contexts/UserContext'
 import ImageItem from './ImageItem'
+import MasonryList from "react-native-masonry-list";
 
 const windowWidth = Dimensions.get('window').width;
-const screenWidth = (percent) => (windowWidth * percent)/ 100;
+const screenWidth = (percent) => (windowWidth * percent) / 100;
 const windowHeight = Dimensions.get('window').height;
-const screenHeight = (percent) => (windowHeight * percent)/ 100
+const screenHeight = (percent) => (windowHeight * percent) / 100
 
 import { Container, Header, Item, Input, Icon } from 'native-base';
 
-const data = [
-  'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg',
-  'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg',
-  'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg',
-  'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg',
-  'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg',
-  'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg',
-  'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg',
-  'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg',
-  'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg',
-  'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg'
-]
-
 
 function CenterProfile(props) {
+
+ let data = [
+    {
+      uri: "https://i.pinimg.com/236x/bb/ff/b9/bbffb9f400aeb9300d29b1a7aeb23edc.jpg",
+      id: "Hainn"
+    },
+    {
+      uri: "https://vnn-imgs-f.vgcloud.vn/2018/03/08/16/nu-phuot-thu-7.jpg",
+      id: "Hainn"
+    },
+    {
+      uri: "https://motosaigon.vn/wp-content/uploads/2016/12/959-Panigale-Ducati-nu-biker-iron-man-motosaigon-4.jpg",
+      id: "Hainn"
+    },
+    {
+      uri: "https://motosaigon.vn/wp-content/uploads/2019/07/nu-biker-cuoi-ducati-panigale-v4-iron-man-motosaigon-1-1.jpg",
+      id: "Hainn"
+    },
+    {
+      uri: "https://media.gettyimages.com/photos/portrait-of-mature-male-motorcyclist-on-arid-plain-cagliari-sardinia-picture-id521980023?s=612x612",
+      id: "Hainn"
+    },
+    {
+      uri: "https://vnn-imgs-f.vgcloud.vn/2018/03/08/16/nu-phuot-thu-3.jpg",
+      id: "Hainn"
+    },
+    {
+      uri: "https://vnn-imgs-f.vgcloud.vn/2018/04/15/16/dan-hotgirl-xinh-dep-do-dang-cung-hang-ngan-mo-to-khung.jpg",
+      id: "Hainn"
+    },
+    {
+      uri: "https://caphemoingay.com/wp-content/uploads/iamges/2020/01/10/349350708403.jpg",
+      id: "Hainn"
+    },
+    {
+      uri: "https://pro-biker.vn/image/cache/data/bao-tay/Bao-tay-probiker-dai-den-3-800x800.jpg",
+      id: "Hainn"
+    },
+    {
+      uri: "https://media.sohuutritue.net.vn/resize/500x333/files/huongmi/2018/03/08/doan-trang-1203.jpeg",
+      id: "Hainn"
+    },
+    {
+      uri: "https://www.gamemaps.com/img/game_icons/gtavc.jpg",
+      id: "Hainn"
+    },
+    {
+      uri: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FShareImages-677def78-6076-44c9-8e2b-f977bb71b1d2/ImagePicker/61bd41f6-d524-41dc-96cc-d3969e10605a.jpg"
+    }
+  ];
+  
+
   const [isLoading, setIsLoading] = useState(false)
   function handleSearch() {
     setIsLoading(true)
     setTimeout(() => {
       setIsLoading(false)
     }, 3000)
+  }
+  function onPressImage(object, index) {
+    console.log(object)
   }
 
   return (
@@ -45,37 +88,31 @@ function CenterProfile(props) {
           isLoading ? (
             <Button loading title="Search" />
           ) : (
-            <Button onPress={ () => handleSearch()} title="Search" />
-          )
+              <Button onPress={() => handleSearch()} title="Search" />
+            )
         }
       </Item>
       <ScrollView showsVerticalScrollIndicator={false} >
         <View style={{ flexDirection: 'row', paddingBottom: 750, paddingTop: 10 }}>
-          <View style={{ width: windowWidth* 0.48, right: 6 }}>
-            <ImageItem url={'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg'} />
-            <ImageItem url={'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg'} />
-            <ImageItem url={'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg'} />
-            <ImageItem url={'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg'} />
-            <ImageItem url={'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg'} />
-            <ImageItem url={'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg'} />
-            <ImageItem url={'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg'} />
-            <ImageItem url={'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg'} />
-            <ImageItem url={'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg'} />
-            <ImageItem url={'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg'} />
-            <ImageItem url={'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg'} />
-            <ImageItem url={'https://i.pinimg.com/originals/4c/6d/20/4c6d205f87a077b30eaa8871b252a275.jpg'} />
+          <View style={{ width: windowWidth * 1}}>
+            <MasonryList
+              columns={3}
+              sorted={true}
+              onPressImage={ (object, index) => onPressImage(object, index)}
+              images={data}
+            />
           </View>
-          <View>
+          {/* <View>
             {
               data.map((url, i) => {
                 return (
-                  <TouchableOpacity onPress={ () => console.log(i)}>
+                  <TouchableOpacity onPress={() => console.log(i)}>
                     <ImageItem url={url} />
                   </TouchableOpacity>
                 )
               })
             }
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </View>
@@ -85,6 +122,12 @@ function CenterProfile(props) {
 const styles = StyleSheet.create({
   container: {
     padding: screenWidth(2)
+  },
+  imgContainer: {
+    borderRadius: 15,
+    marginLeft: screenWidth(3),
+    width: screenWidth(45),
+    marginVertical: screenWidth(3)
   }
 })
 

@@ -6,6 +6,9 @@ import Masonry from 'react-native-masonry'
 import MasonryList from "react-native-masonry-list"
 import FullScreen from './FullScreen'
 import ImageLayout from "react-native-image-layout";
+import { API } from '../../constants/api'
+import { postMethod, jsonHeader } from '../../constants/fetchTool'
+
 
 function GridImage(props) {
 
@@ -46,6 +49,24 @@ function GridImage(props) {
             link: '../../assets/topic/phongcanh.jpg',
             height: 846
         },
+        {
+            source: require("../../assets/topic/phongcanh.jpg"),
+            width: 564,
+            link: '../../assets/topic/phongcanh.jpg',
+            height: 846
+        },
+        {
+            source: require("../../assets/topic/phongcanh.jpg"),
+            width: 564,
+            link: '../../assets/topic/phongcanh.jpg',
+            height: 846
+        },
+        {
+            source: require("../../assets/topic/phongcanh.jpg"),
+            width: 564,
+            link: '../../assets/topic/phongcanh.jpg',
+            height: 846
+        },
         
     ]
 
@@ -53,8 +74,10 @@ function GridImage(props) {
     const [clickedImage, setClickImage] = useState(false);
 
     const clickImage = (object, number) => {
-        props.click(object)
+        console.log(object)
+        props.click(object.link)
     }
+
 
     return (
         

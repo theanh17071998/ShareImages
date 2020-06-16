@@ -33,6 +33,7 @@ function Avartar() {
     if (!result.cancelled) {
       setImage(result.uri)
     }
+    console.log(result);
   }
 
   return (
