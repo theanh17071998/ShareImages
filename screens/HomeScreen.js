@@ -49,8 +49,8 @@ function HomeScreen ({ navigation }) {
   return (
     <View style={styles.container}>
         <Header
-                  centerComponent={{ text: 'HOME', style: { color: '#fff' } }}
-                  containerStyle={{height: screenHeight(10), marginTop: -10}}
+                  centerComponent={{ text: 'HOME', style: { color: '#000', fontSize: 18, fontWeight: '700'}}}
+                  containerStyle={{height: screenHeight(10), marginTop: -10,  backgroundColor: '#fff', borderBottomWidth: 2}}
             />
       <MasonryList
         columns={2}

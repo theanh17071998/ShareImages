@@ -65,7 +65,7 @@ function FullScreen(props) {
 
 var styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        backgroundColor: 'white'
     },
     scrollView: {
         height: screenHeight(90)

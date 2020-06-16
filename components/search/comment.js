@@ -72,7 +72,8 @@ const styles = StyleSheet.create({
   root: {
     backgroundColor: "#ffffff",
     marginTop:10,
-    paddingHorizontal: screenWidth(4)
+    paddingHorizontal: screenWidth(4),
+    marginBottom: screenHeight(10)
   },
   container: {
     paddingVertical: 12,
