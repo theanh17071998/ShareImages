@@ -35,10 +35,10 @@ export default function Notification() {
       
       <View>
           <Header
-            leftComponent={{ icon: 'chevron-left', color: '#fff' }}
-            centerComponent={{ text: 'THÔNG BÁO', style: { color: '#fff' } }}
+            leftComponent={{ icon: 'chevron-left', color: '#000' }}
+            centerComponent={{ text: 'THÔNG BÁO', style: { color: '#000', fontWeight: '700', fontSize: 18 } }}
             rightComponent={{ icon: 'home', color: '#fff' }}
-            containerStyle={{height: screenHeight(10), marginTop: -10}}
+            containerStyle={{height: screenHeight(10), marginTop: -10, backgroundColor: '#fff', borderBottomWidth: 2}}
           />
         <View style={styles.listItem}>
           {

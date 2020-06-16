@@ -23,10 +23,10 @@ function FullScreen(props) {
     return (
         <View style={styles.container}>
             <Header
-                  leftComponent={{ icon: 'chevron-left', color: '#fff' }}
-                  centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+                  leftComponent={{ icon: 'chevron-left', color: '#000' }}
+                  centerComponent={{ text: 'MY TITLE', style: { color: '#000', fontSize: 18, fontWeight: '700' } }}
                   rightComponent={{ icon: 'home', color: '#fff' }}
-                  containerStyle={{height: screenHeight(10), marginTop: -10}}
+                  containerStyle={{height: screenHeight(10), marginTop: -10, backgroundColor: '#fff', borderBottomWidth: 2}}
             />
             <View>
                 <ScrollView style={styles.scrollView}>
@@ -59,7 +59,7 @@ function FullScreen(props) {
 
 var styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        backgroundColor: 'white'
     },
     scrollView: {
         height: screenHeight(90)

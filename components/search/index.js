@@ -78,8 +78,10 @@ var styles = StyleSheet.create({
 
     },
     container: {
-        marginTop: 40,
-        margin: 20,
+        paddingTop: 10,
+        marginBottom: 20,
+        marginRight: 20,
+        marginLeft: 20
     },
     topicContainer: {
         height: 130,
