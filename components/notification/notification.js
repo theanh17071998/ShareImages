@@ -34,8 +34,8 @@ export default function Notification() {
     return (
       <View>
           <Header
-            centerComponent={{ text: 'THÔNG BÁO', style: { color: '#fff' } }}
-            containerStyle={{height: screenHeight(10), marginTop: -10}}
+            centerComponent={{ text: 'THÔNG BÁO', style: { color: '#000', fontSize: 18, fontWeight: '700'} }}
+            containerStyle={{height: screenHeight(10), marginTop: -10, backgroundColor: '#fff'}}
           />
         <View style={styles.listItem}>
           {

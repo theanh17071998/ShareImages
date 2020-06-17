@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Image, View, StyleSheet, TouchableOpacity, Text, Dimensions, ScrollView } from 'react-native'
-import { Button } from 'react-native-elements'
+import { Button, Header } from 'react-native-elements'
 import * as ImagePicker from 'expo-image-picker'
 import Constants from 'expo-constants'
 import UserContext from '../../contexts/UserContext'
@@ -12,7 +12,7 @@ const screenWidth = (percent) => (windowWidth * percent) / 100;
 const windowHeight = Dimensions.get('window').height;
 const screenHeight = (percent) => (windowHeight * percent) / 100
 
-import { Container, Header, Item, Input, Icon } from 'native-base';
+import { Container, Item, Input, Icon } from 'native-base';
 
 
 function CenterProfile(props) {
@@ -81,8 +81,8 @@ function CenterProfile(props) {
 
   return (
     <View style={styles.container}>
-      <Item>
-        <Icon name="ios-search" />
+      <Item style={styles.inputSearch}>
+        <Icon style={{paddingLeft: 10}} name="ios-search" />
         <Input placeholder="Search" />
         {
           isLoading ? (
@@ -128,6 +128,10 @@ const styles = StyleSheet.create({
     marginLeft: screenWidth(3),
     width: screenWidth(45),
     marginVertical: screenWidth(3)
+  }, 
+  inputSearch: {
+    marginLeft: screenWidth(2),
+    marginRight: screenWidth(0.6)
   }
 })
 

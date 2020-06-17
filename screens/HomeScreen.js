@@ -49,8 +49,10 @@ function HomeScreen ({ navigation }) {
   return (
     <View style={styles.container}>
         <Header
+                  placement="left"
                   centerComponent={{ text: 'HOME', style: { color: '#000', fontSize: 18, fontWeight: '700'}}}
                   containerStyle={{height: screenHeight(10), marginTop: -10,  backgroundColor: '#fff', borderBottomWidth: 2}}
+                  rightComponent={{ icon: 'add-circle-outline', color: '#000', borderRadius: '50%'}}
             />
       <MasonryList
         columns={2}

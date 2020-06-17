@@ -3,6 +3,7 @@ import { Button, Image, View, StyleSheet, TouchableOpacity, Text, DevSettings, D
 import * as ImagePicker from 'expo-image-picker'
 import Constants from 'expo-constants'
 import UserContext from '../../contexts/UserContext'
+
 const windowWidth = Dimensions.get('window').width;
 const screenWidth = (percent) => (windowWidth * percent)/ 100;
 const windowHeight = Dimensions.get('window').height;
@@ -58,14 +59,6 @@ function Info() {
   return (
     <View>
       <View>
-        <Text style={{
-          fontSize: 20,
-          color: 'tomato',
-          fontWeight: 'bold',
-          overflow: "hidden"
-        }}>{ ('Nguyễn Ngọc Hải'.length > 20) ? 
-          (('Nguyễn Ngọc Hải'.substring(0,20-3)) + '...') : 
-          'Nguyễn Ngọc Hải' }</Text>
       </View>
       <View style={{ marginBottom: 4, marginTop: 7 }}>
         <Button title="27 Following" />
@@ -93,15 +86,17 @@ function TopProfile(props) {
 const styles = StyleSheet.create({
   container: {
     padding: screenWidth(2),
-    paddingTop: 35,
+    paddingTop: screenHeight(5),
+    paddingBottom: screenHeight(5),
     flexDirection: 'row',
     backgroundColor: '#2089dc66',
     marginHorizontal: screenWidth(2),
     marginTop: screenWidth(2)
   },
   avatar: {
-    marginRight: 10,
-    top: 18
+    marginLeft: screenWidth(1),
+    marginRight: screenWidth(5),
+    top: screenHeight(0.5)
   }
 })
 
