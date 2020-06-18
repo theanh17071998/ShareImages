@@ -50,6 +50,7 @@ function Home() {
       .then((res) => {
         if (res.code == 200) {
           setData(res.data.data)
+          console.log(res.data.data)
         }
       })
       .catch((err) => {
@@ -89,9 +90,9 @@ function Home() {
               images={data}
               imageContainerStyle={styles.imgContainer}
               listContainerStyle={styles.listContainer}
-              onEndReached={() => {
-                console.log('sda')
-                setScrollCount(scrollCount + 1)}}
+              // onEndReached={() => {
+              //   console.log('sda')
+              //   setScrollCount(scrollCount + 1)}}
                 onEndReachedThreshold={10}
             />
           </ScrollView>

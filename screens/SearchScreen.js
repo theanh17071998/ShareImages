@@ -4,11 +4,9 @@ import Search from '../components/search/index'
 
 function SearchScreen() {
   return (
-    <View>
       <View>
         <Search/>
       </View>
-    </View>
   )
 }
 
