@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,69 +9,81 @@ import {
   FlatList,
   Dimensions
 } from 'react-native';
+import { Card, Header, SearchBar } from 'react-native-elements'
+import { API } from '../../constants/api'
+import { Props } from 'react-native-image-zoom-viewer/built/image-viewer.type'
+import { postMethod, jsonHeader, getMethod } from '../../constants/fetchTool'
+
 const windowWidth = Dimensions.get('window').width;
-const screenWidth = (percent) => (windowWidth * percent)/ 100;
+const screenWidth = (percent) => (windowWidth * percent) / 100;
 const windowHeight = Dimensions.get('window').height;
-const screenHeight = (percent) => (windowHeight * percent)/ 100
+const screenHeight = (percent) => (windowHeight * percent) / 100
 
-export default class Comments extends Component {
+export default function Comments(props) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      data:[
-        {id:1, image: "https://bootdey.com/img/Content/avatar/avatar1.png", name:"Frank Odalthh",    comment:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."},
-        {id:2, image: "https://bootdey.com/img/Content/avatar/avatar6.png", name:"John DoeLink",     comment:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."},
-        {id:3, image: "https://bootdey.com/img/Content/avatar/avatar7.png", name:"March SoulLaComa", comment:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."},
-        {id:4, image: "https://bootdey.com/img/Content/avatar/avatar2.png", name:"Finn DoRemiFaso",  comment:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."},
-        {id:5, image: "https://bootdey.com/img/Content/avatar/avatar3.png", name:"Maria More More",  comment:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."},
-        {id:6, image: "https://bootdey.com/img/Content/avatar/avatar4.png", name:"Clark June Boom!", comment:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."},
-        {id:7, image: "https://bootdey.com/img/Content/avatar/avatar5.png", name:"The googler",      comment:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."},
-      ]
-    }
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  const getData = () => {
+    fetch(API.GET_COMMENT_BY_IMAGEID + props.imageid, {
+      headers: jsonHeader.headers,
+      method: getMethod.method,
+    }).then(response => response.json())
+      .then((res) => {
+        if (res.code == 200) {
+          setData(res.data.comments)
+          console.log('asdas')
+          console.log(res.data.comments)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
-  render() {
-    return (
-      <FlatList
-        style={styles.root}
-        data={this.state.data}
-        extraData={this.state}
-        ItemSeparatorComponent={() => {
-          return (
-            <View style={styles.separator}/>
-          )
-        }}
-        keyExtractor={(item)=>{
-          return item.id;
-        }}
-        renderItem={(item) => {
-          const Notification = item.item;
-          return(
-            <View style={styles.container}>
-              <TouchableOpacity onPress={() => {}}>
-                <Image style={styles.image} source={{uri: Notification.image}}/>
-              </TouchableOpacity>
-              <View style={styles.content}>
-                <View style={styles.contentHeader}>
-                  <Text  style={styles.name}>{Notification.name}</Text>
-                  <Text style={styles.time}>
-                    9:58 am
+
+return (
+  <FlatList
+    style={styles.root}
+    data={data}
+    ItemSeparatorComponent={() => {
+      return (
+        <View style={styles.separator} />
+      )
+    }}
+    keyExtractor={(item) => {
+      return item.id;
+    }}
+    renderItem={(item) => {
+      const Notification = item.item;
+      return (
+        <View style={styles.container}>
+          <TouchableOpacity onPress={() => { }}>
+            <Image style={styles.image} source={{ uri: Notification.user.avatarUrl }} />
+          </TouchableOpacity>
+          <View style={styles.content}>
+            <View style={styles.contentHeader}>
+              <Text style={styles.name}>{Notification.user.userName}</Text>
+              <Text style={styles.time}>
+                {Date(Notification.date).split(' ')[3] +' ' + Date(Notification.date).split(' ')[4]}
                   </Text>
-                </View>
-                <Text rkType='primary3 mediumLine'>{Notification.comment}</Text>
-              </View>
             </View>
-          );
-        }}/>
-    );
-  }
+            <Text rkType='primary3 mediumLine'>{Notification.content}</Text>
+          </View>
+        </View>
+      );
+    }} />
+);
 }
+
 
 const styles = StyleSheet.create({
   root: {
     backgroundColor: "#ffffff",
-    marginTop:10,
+    marginTop: 10,
     paddingHorizontal: screenWidth(4),
     marginBottom: screenHeight(10)
   },
@@ -93,18 +105,18 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: "#CCCCCC"
   },
-  image:{
-    width:45,
-    height:45,
-    borderRadius:20,
-    marginLeft:20
+  image: {
+    width: 45,
+    height: 45,
+    borderRadius: 20,
+    marginLeft: 20
   },
-  time:{
-    fontSize:11,
-    color:"#808080",
+  time: {
+    fontSize: 11,
+    color: "#808080",
   },
-  name:{
-    fontSize:16,
-    fontWeight:"bold",
+  name: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });  

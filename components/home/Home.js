@@ -1,66 +1,112 @@
 import * as React from 'react'
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, ListView } from 'react-native'
 import MasonryList from "react-native-masonry-list";
-import { Card, Header} from 'react-native-elements';
+import { Card, Header, SearchBar } from 'react-native-elements';
+import { API } from '../../constants/api'
+import { postMethod, jsonHeader, getMethod } from '../../constants/fetchTool'
+import { ScrollView, FlatList } from 'react-native-gesture-handler';
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import PostImage from './PostImage'
+import FullScreen from '../search/FullScreen';
+
 
 const windowWidth = Dimensions.get('window').width;
-const screenWidth = (percent) => (windowWidth * percent)/ 100;
+const screenWidth = (percent) => (windowWidth * percent) / 100;
 const windowHeight = Dimensions.get('window').height;
-const screenHeight = (percent) => (windowHeight * percent)/ 100
+const screenHeight = (percent) => (windowHeight * percent) / 100
 
-const data = [
-  {
-    uri: "https://i.pinimg.com/236x/bb/ff/b9/bbffb9f400aeb9300d29b1a7aeb23edc.jpg"
-  },
-  {
-    uri: "https://vnn-imgs-f.vgcloud.vn/2018/03/08/16/nu-phuot-thu-7.jpg"
-  },
-  {
-    uri: "https://motosaigon.vn/wp-content/uploads/2016/12/959-Panigale-Ducati-nu-biker-iron-man-motosaigon-4.jpg"
-  },
-  {
-    uri: "https://motosaigon.vn/wp-content/uploads/2019/07/nu-biker-cuoi-ducati-panigale-v4-iron-man-motosaigon-1-1.jpg"
-  },
-  {
-    uri: "https://media.gettyimages.com/photos/portrait-of-mature-male-motorcyclist-on-arid-plain-cagliari-sardinia-picture-id521980023?s=612x612"
-  },
-  {
-    uri: "https://vnn-imgs-f.vgcloud.vn/2018/03/08/16/nu-phuot-thu-3.jpg"
-  },
-  {
-    uri: "https://vnn-imgs-f.vgcloud.vn/2018/04/15/16/dan-hotgirl-xinh-dep-do-dang-cung-hang-ngan-mo-to-khung.jpg"
-  },
-  {
-    uri: "https://caphemoingay.com/wp-content/uploads/iamges/2020/01/10/349350708403.jpg"
-  },
-  {
-    uri: "https://pro-biker.vn/image/cache/data/bao-tay/Bao-tay-probiker-dai-den-3-800x800.jpg"
-  },
-  {
-    uri: "https://media.sohuutritue.net.vn/resize/500x333/files/huongmi/2018/03/08/doan-trang-1203.jpeg"
-  },
-  {
-    uri: "https://www.gamemaps.com/img/game_icons/gtavc.jpg"
+
+function Home() {
+
+  // const [images, setImages] = useState([])
+
+  // useEffect(() => {
+  //   console.log('1')
+  //   getData()
+  // }, [])
+
+  React.useEffect(() => {
+    console.log('fetch data')
+    getData()
+  }, [scrollCount])
+
+  const clickPostImage = () => {
+    setPressPostImage(true)
   }
-];
 
-function Home ({ navigation }) {
+  const [onPressPostImage, setPressPostImage] = React.useState(false)
+  const [onPressImage, setPressImage] = React.useState(false)
+  const [objectImage, setObjectImage] = React.useState()
+  const [data, setData] = React.useState([
+  ])
+  const [scrollCount, setScrollCount] = React.useState(0)
+
+  const getData = () => {
+
+    fetch(API.GET_HOME_IMAGE + scrollCount, {
+      headers: jsonHeader.headers,
+      method: getMethod.method,
+    }).then(response => response.json())
+      .then((res) => {
+        if (res.code == 200) {
+          setData(res.data.data)
+        }
+      })
+      .catch((err) => {
+
+        console.log(err)
+
+      })
+  }
 
   return (
-    <View style={styles.container}>
-        <Header
-                  centerComponent={{ text: 'HOME', style: { color: '#fff' } }}
-                  containerStyle={{height: screenHeight(10), marginTop: -10}}
+    onPressPostImage == false ? (
+      onPressImage == false ? (
+        <View>
+          <Header
+            containerStyle={{
+              height: screenHeight(10), marginTop: -10, backgroundColor: '#fff', borderBottomWidth: 2,
+            }}
+            leftComponent={{
+              text: 'ISHARE', style: {
+                color: '#000', fontFamily: 'monospace', fontWeight: 'bold',
+                textShadowColor: 'black'
+              },
+            }}
+            rightComponent={{ icon: 'add-circle-outline', color: '#000', borderRadius: '50%', onPress: () => { clickPostImage() } }}
+          />
+
+          <ScrollView showsVerticalScrollIndicator={false}  >
+
+            <MasonryList
+              columns={2}
+              sorted={true}
+              onPressImage={(object, index) => {
+                setObjectImage(object)
+                setPressImage(true)
+                console.log(object)
+              }}
+              images={data}
+              imageContainerStyle={styles.imgContainer}
+              listContainerStyle={styles.listContainer}
+              onEndReached={() => {
+                console.log('sda')
+                setScrollCount(scrollCount + 1)}}
+                onEndReachedThreshold={10}
             />
-      <MasonryList
-        columns={2}
-        sorted={true}
-        // onPressImage={this.onPressImage}
-        images={data}
-        imageContainerStyle={styles.imgContainer}
-        listContainerStyle={styles.listContainer}
-      />
-    </View>
+          </ScrollView>
+        </View>
+      ) : (
+          <FullScreen image={objectImage} clickBack={() => {
+
+            setPressImage(false)
+          }} />
+        )
+
+    ) : (
+        <PostImage back={() => { setPressPostImage(false) }} />
+      )
+
   )
 }
 

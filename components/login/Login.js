@@ -42,7 +42,7 @@ function Login(props) {
       headers: jsonHeader.headers,
       method: postMethod.method,
       body: JSON.stringify({
-        password: newPassword,
+        password: password,
         userName: userName
       })
     }).then(response => response.json())

@@ -1,12 +1,15 @@
 import * as React from 'react'
 import { View, Text, StyleSheet, Dimensions } from 'react-native'
 import MasonryList from "react-native-masonry-list";
-import { Card, Header} from 'react-native-elements';
+import { Card, Header } from 'react-native-elements';
+import Home from '../components/home/Home'
+import { API } from '../constants/api'
+import { postMethod, jsonHeader, getMethod } from '../constants/fetchTool'
 
 const windowWidth = Dimensions.get('window').width;
-const screenWidth = (percent) => (windowWidth * percent)/ 100;
+const screenWidth = (percent) => (windowWidth * percent) / 100;
 const windowHeight = Dimensions.get('window').height;
-const screenHeight = (percent) => (windowHeight * percent)/ 100
+const screenHeight = (percent) => (windowHeight * percent) / 100
 
 const data = [
   {
@@ -44,25 +47,9 @@ const data = [
   }
 ];
 
-function HomeScreen ({ navigation }) {
-
+function HomeScreen() {
   return (
-    <View style={styles.container}>
-        <Header
-                  placement="left"
-                  centerComponent={{ text: 'HOME', style: { color: '#000', fontSize: 18, fontWeight: '700'}}}
-                  containerStyle={{height: screenHeight(10), marginTop: -10,  backgroundColor: '#fff', borderBottomWidth: 2}}
-                  rightComponent={{ icon: 'add-circle-outline', color: '#000', borderRadius: '50%'}}
-            />
-      <MasonryList
-        columns={2}
-        sorted={true}
-        // onPressImage={this.onPressImage}
-        images={data}
-        imageContainerStyle={styles.imgContainer}
-        listContainerStyle={styles.listContainer}
-      />
-    </View>
+    <Home/>
   )
 }
 

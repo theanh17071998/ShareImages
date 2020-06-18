@@ -54,6 +54,7 @@ function App() {
     socket.on('serverLogin', async () => {
       const userTemp = await AsyncStorage.getItem('user')
       setUser(JSON.parse(userTemp))
+      console.log('sdj')
     })
   }
   if (number === 271299) {

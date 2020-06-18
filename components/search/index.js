@@ -19,6 +19,7 @@ function Search() {
     const listenClickImage = (object) => {
         setObjectImage(object)
         setClick(true)
+        console.log(object)
     }
 
     const listenClickBack =  () => {
@@ -69,7 +70,7 @@ function Search() {
                 <GridImage click={listenClickImage} clickBack={listenClickBack} />
             </ScrollView>
         ) : (
-                <FullScreen clickBack={listenClickBack} imageLink={objectImage} />
+                <FullScreen clickBack={listenClickBack} image={objectImage} />
             )
 
     )
