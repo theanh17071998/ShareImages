@@ -61,9 +61,6 @@ function CenterProfile(props) {
     {
       uri: "https://www.gamemaps.com/img/game_icons/gtavc.jpg",
       id: "Hainn"
-    },
-    {
-      uri: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FShareImages-677def78-6076-44c9-8e2b-f977bb71b1d2/ImagePicker/61bd41f6-d524-41dc-96cc-d3969e10605a.jpg"
     }
   ];
   
@@ -93,7 +90,7 @@ function CenterProfile(props) {
         }
       </Item>
       <ScrollView showsVerticalScrollIndicator={false} >
-        <View style={{ flexDirection: 'row', paddingBottom: 750, paddingTop: 10 }}>
+        <View style={{ flexDirection: 'row', paddingBottom: 910, paddingTop: 10 }}>
           <View style={{ width: windowWidth * 1}}>
             <MasonryList
               columns={3}

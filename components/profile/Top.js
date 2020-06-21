@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Button, Image, View, StyleSheet, TouchableOpacity, Text, DevSettings, Dimensions } from 'react-native'
+import { Button, Image, View, StyleSheet, TouchableOpacity, Text, AsyncStorage, Dimensions } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 import Constants from 'expo-constants'
 import UserContext from '../../contexts/UserContext'
+import { API } from '../../constants/api'
+import { postMethod, jsonHeader } from '../../constants/fetchTool'
 
 const windowWidth = Dimensions.get('window').width;
 const screenWidth = (percent) => (windowWidth * percent)/ 100;
 const windowHeight = Dimensions.get('window').height;
 const screenHeight = (percent) => (windowHeight * percent)/ 100
 
-function Avartar() {
+function Avartar(props) {
   const [image, setImage] = useState(null)
   const [srcImage, setSrcImage] = useState('https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png')
+  const { socket } = useContext(UserContext)
   useEffect(() => {
     (async () => {
       if (Constants.platform.ios) {
@@ -21,7 +24,37 @@ function Avartar() {
         }
       }
     })()
-  })
+    props.user ? setSrcImage(props.user.avatarUrl) : null
+  }, [])
+
+  function changeAvatar(url) {
+    fetch(API.UPDATE_PROFILE, {
+      headers: jsonHeader.headers,
+      method: 'PUT',
+      body: JSON.stringify({
+        token: props.user.token,
+        newUser: {
+          avatarUrl: url
+        }
+      })
+    }).then(response => response.json())
+      .then((res) => {
+        if (res.code == 200) {
+          AsyncStorage.setItem('user', JSON.stringify({
+            ...res.data.user,
+            token: props.user.token
+          }))
+          socket.emit('clientUpdateProfile', props.user.userName)
+          setSrcImage(res.data.user.avatarUrl)
+          console.log(srcImage)
+        } else {
+          console.log(res)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -32,9 +65,10 @@ function Avartar() {
     })
     result.uri ? setSrcImage(result.uri) : console.log('Cancel')
     if (!result.cancelled) {
-      setImage(result.uri)
+      setSrcImage(result.uri)
     }
     console.log(result);
+    changeAvatar(result.uri)
   }
 
   return (
@@ -50,7 +84,7 @@ function Avartar() {
   )
 }
 
-function Info() {
+function Info(props) {
   const { socket } = useContext(UserContext) // useContext(UserContext) tra ve value
   const { idUser } = useContext(UserContext)
   const handleLogout = () => {
@@ -61,11 +95,11 @@ function Info() {
       <View>
       </View>
       <View style={{ marginBottom: 4, marginTop: 7 }}>
-        <Button title="27 Following" />
+        <Button title={`${props.user ? props.user.listUserFlow.length : 0} Following`} />
       </View>
-      <View>
+      {/* <View>
         <Button title="12 Follower" />
-      </View>
+      </View> */}
       <View style={{ marginBottom: 1, marginTop: 4 }}>
         <Button title="Logout" color="tomato" onPress={ () => handleLogout() } />
       </View>
@@ -77,8 +111,8 @@ function Info() {
 function TopProfile(props) {
   return (
     <View style={styles.container}>
-      <Avartar/>
-      <Info />
+      <Avartar user={props.user} />
+      <Info user={props.user} />
     </View>
   )
 }

@@ -42,7 +42,7 @@ function Login(props) {
       headers: jsonHeader.headers,
       method: postMethod.method,
       body: JSON.stringify({
-        password: password,
+        password: newPassword,
         userName: userName
       })
     }).then(response => response.json())
@@ -53,8 +53,9 @@ function Login(props) {
           console.log(idUser)
           socket.emit('clientLogin', idUser)
         } else {
-          setIsCorrectUsername(res.data.status.isCorrectUsername)
-          setIsCorrectPassword(res.data.status.isCorrectPassword)
+          console.log(res)
+          // setIsCorrectUsername(res.data.status.isCorrectUsername)
+          // setIsCorrectPassword(res.data.status.isCorrectPassword)
         }
       })
       .catch((err) => {

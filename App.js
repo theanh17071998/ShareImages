@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://192.168.23.102:3000";
+const ENDPOINT = "http://192.168.23.101:3000";
 import { AsyncStorage } from 'react-native'
 import { UserProvider } from './contexts/UserContext'
 
@@ -54,7 +54,8 @@ function App() {
     socket.on('serverLogin', async () => {
       const userTemp = await AsyncStorage.getItem('user')
       setUser(JSON.parse(userTemp))
-      console.log('sdj')
+      console.log(user)
+      socket.emit('clientJoinRoom', user.userName)
     })
   }
   if (number === 271299) {
@@ -62,7 +63,7 @@ function App() {
     number++
   }
   return (
-    // user ? (
+    user ? (
       <UserProvider value={{socket, idUser}}>
         <NavigationContainer>
           <Tab.Navigator 
@@ -125,13 +126,13 @@ function App() {
           </Tab.Navigator>
         </NavigationContainer>
       </UserProvider>
-    // ) : (
-    //   <UserProvider value={{ socket, idUser }}>
-    //     <View>
-    //       <LoginScreen />
-    //     </View>
-    //   </UserProvider>
-    // )
+    ) : (
+      <UserProvider value={{ socket, idUser }}>
+        <View>
+          <LoginScreen />
+        </View>
+      </UserProvider>
+    )
   )
 }
 

@@ -19,6 +19,7 @@ const API = {
   GET_COMMENT_BY_IMAGEID: `${config.BACKEND_ADDRESS}/api/comments/`,
   COMMENT: `${config.BACKEND_ADDRESS}/api/comments`,
   LIKE_IMAGE: `${config.BACKEND_ADDRESS}/api/images/`,
+  UPDATE_PROFILE: `${config.BACKEND_ADDRESS}/api/users`
 }
 
 const SOCKET_EVENT = {
