@@ -7,6 +7,7 @@ import UserContext from '../contexts/UserContext'
 import setting from '../assets/gear.png'
 import { API } from '../constants/api'
 import { postMethod, jsonHeader } from '../constants/fetchTool'
+import FullScreen from '../components/search/FullScreen'
 
 const windowWidth = Dimensions.get('window').width;
 const screenWidth = (percent) => (windowWidth * percent)/ 100;
@@ -16,10 +17,13 @@ const screenHeight = (percent) => (windowHeight * percent)/ 100
 function ProfileScreen() {
 
   const [user, setUser] = useState(null)
+  const [image, setImage] = useState({})
   const [modalVisible, setModalVisible] = useState(false);
   const [newUser, onChangeText] = useState(user ? user.fullName : 'FULL NAME');
   const [isLoading, setLoading] = useState(false);
   const { socket } = useContext(UserContext)
+  const [onClickImage, setOnClickImage] = useState(false)
+
 
 
   function changeName() {
@@ -35,7 +39,7 @@ function ProfileScreen() {
       })
     }).then(response => response.json())
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         if (res.code == 200) {
           AsyncStorage.setItem('user', JSON.stringify({
             ...res.data.user,
@@ -60,75 +64,87 @@ function ProfileScreen() {
         console.log(err)
       })
   }
-
   useEffect(() => {
     AsyncStorage.getItem('user').then((userTemp) => {
       if (userTemp) {
         setUser(JSON.parse(userTemp))
-        onChangeText(user.fullName)
+        onChangeText(JSON.parse(userTemp).fullName)
+        socket.emit('clientJoinRoom', JSON.parse(userTemp).userName)
       } else {
         setUser(null)
       }
     })
+    socket.on('serverClickImageFromProfile', (data) => {
+      setImage(data.image)
+      setTimeout(() => {
+        setOnClickImage(true)
+      }, 10)
+    })
   }, [])
 
   return (
-    <View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Đổi tên</Text>
-            <TextInput
-              style={{ height: 40, borderColor: 'gray', padding: 10, marginBottom: 10, borderBottomWidth: 1 }}
-              onChangeText={text => onChangeText(text)}
-              value={newUser}
-            />
-            {
-              isLoading ? (
-                <Button
-                  loading={isLoading}              
-                  buttonStyle={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-                />
-              ) : (
-                <TouchableHighlight
-                  style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-                  onPress={() => {
-                    changeName();
-                  }}
-                >
-                  <Text style={styles.textStyle}>Xác nhận</Text>
-                </TouchableHighlight>
-              )
-            }
+    onClickImage ? (
+      <FullScreen image={image} clickBack={() => {
+        setOnClickImage(false)
+      }}/>
+    ) : (
+      <View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Đổi tên</Text>
+              <TextInput
+                style={{ height: 40, borderColor: 'gray', padding: 10, marginBottom: 10, borderBottomWidth: 1 }}
+                onChangeText={text => onChangeText(text)}
+                value={newUser}
+              />
+              {
+                isLoading ? (
+                  <Button
+                    loading={isLoading}              
+                    buttonStyle={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                  />
+                ) : (
+                  <TouchableHighlight
+                    style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                    onPress={() => {
+                      changeName();
+                    }}
+                  >
+                    <Text style={styles.textStyle}>Xác nhận</Text>
+                  </TouchableHighlight>
+                )
+              }
+            </View>
           </View>
-        </View>
-      </Modal>
-      {
-        user ? (
-          <View>
-            <Header
-              placement="left"
-              centerComponent={{ text: user ? user.fullName : 'FULL NAME', style: { color: '#000', fontSize: 18, fontWeight: '700'}}}
-              containerStyle={{height: screenHeight(10), marginTop: -10,  backgroundColor: '#fff', borderBottomWidth: 2}}
-              rightComponent={{ icon: 'edit', color: '#000', borderRadius: '50%', onPress: () =>  setModalVisible(!modalVisible) }}
-            />
-            <TopProfileComponent user={user} />
-            <CenterProfileComponent />
-          </View>
-        ) : (
-          <View>
-            <Text>Nguyen Ngoc Hai</Text>
-          </View>
-        )
-      }
-    </View>
+        </Modal>
+        {
+          user ? (
+            <View>
+              <Header
+                placement="left"
+                centerComponent={{ text: user ? user.fullName : 'FULL NAME', style: { color: '#000', fontSize: 18, fontWeight: '700'}}}
+                containerStyle={{height: screenHeight(10), marginTop: -10,  backgroundColor: '#fff', borderBottomWidth: 2}}
+                rightComponent={{ icon: 'edit', color: '#000', borderRadius: '50%', onPress: () =>  setModalVisible(!modalVisible) }}
+              />
+              <TopProfileComponent user={user} />
+              <CenterProfileComponent user={user} />
+            </View>
+          ) : (
+            <View>
+              <Text>Nguyen Ngoc Hai</Text>
+            </View>
+          )
+        }
+      </View>
+    )
   )
 }
 

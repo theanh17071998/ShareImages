@@ -23,6 +23,7 @@ const windowHeight = Dimensions.get('window').height;
 const screenHeight = (percent) => (windowHeight * percent) / 100
 
 function FullScreen(props) {
+    console.log(props.image)
 
     const clickBack = () => {
         props.clickBack()
@@ -44,7 +45,6 @@ function FullScreen(props) {
                 .then((res) => {
                     if (res.code == 200) {
                         console.log(res)
-
                     }
                 })
                 .catch((err) => {

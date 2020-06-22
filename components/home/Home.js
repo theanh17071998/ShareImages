@@ -28,7 +28,7 @@ function Home() {
   React.useEffect(() => {
     console.log('fetch data')
     getData()
-  }, [scrollCount])
+  }, [])
 
   const clickPostImage = () => {
     setPressPostImage(true)
@@ -50,7 +50,6 @@ function Home() {
       .then((res) => {
         if (res.code == 200) {
           setData(res.data.data)
-          console.log(res.data.data)
         }
       })
       .catch((err) => {
@@ -78,7 +77,6 @@ function Home() {
           />
 
           <ScrollView showsVerticalScrollIndicator={false}  >
-
             <MasonryList
               columns={2}
               sorted={true}
@@ -90,20 +88,14 @@ function Home() {
               images={data}
               imageContainerStyle={styles.imgContainer}
               listContainerStyle={styles.listContainer}
-              // onEndReached={() => {
-              //   console.log('sda')
-              //   setScrollCount(scrollCount + 1)}}
-                onEndReachedThreshold={10}
             />
           </ScrollView>
         </View>
       ) : (
           <FullScreen image={objectImage} clickBack={() => {
-
             setPressImage(false)
           }} />
         )
-
     ) : (
         <PostImage back={() => { setPressPostImage(false) }} />
       )
