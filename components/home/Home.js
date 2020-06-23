@@ -1,13 +1,16 @@
-import * as React from 'react'
-import { View, Text, StyleSheet, Dimensions, ListView } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { View, Text, StyleSheet, Dimensions, ListView, AsyncStorage } from 'react-native'
 import MasonryList from "react-native-masonry-list";
 import { Card, Header, SearchBar } from 'react-native-elements';
+import UserContext from '../../contexts/UserContext'
 import { API } from '../../constants/api'
 import { postMethod, jsonHeader, getMethod } from '../../constants/fetchTool'
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import PostImage from './PostImage'
 import FullScreen from '../search/FullScreen';
+import { showMessage, hideMessage } from "react-native-flash-message";
+import FlashMessage from "react-native-flash-message";
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -24,9 +27,30 @@ function Home(props) {
   //   console.log('1')
   //   getData()
   // }, [])
+  const { socket } = useContext(UserContext)
+  const [user, setUser] = useState(null)
 
-  React.useEffect(() => {
-    console.log('fetch data')
+  useEffect(() => {
+      AsyncStorage.getItem('user').then((userTemp) => {
+        if (userTemp) {
+            setUser(JSON.parse(userTemp))
+            socket.emit('clientJoinRoom', JSON.parse(userTemp).userName)
+            socket.on('serverLikeImage', (notify) => {
+              showMessage({   
+                message: "Hello World",
+                description: "This is our second message",
+                type: "success",
+              });
+            })
+            socket.on('serverCommentImage', (notify) => {
+              showMessage({   
+                message: "Hello World",
+                description: "This is our second message",
+                type: "success",
+              });
+            })
+        }
+    })
     getData()
   }, [])
 
@@ -53,9 +77,7 @@ function Home(props) {
         }
       })
       .catch((err) => {
-
         console.log(err)
-
       })
   }
 
@@ -90,6 +112,7 @@ function Home(props) {
               listContainerStyle={styles.listContainer}
             />
           </ScrollView>
+          <FlashMessage position="top" duration={2000} />
         </View>
       ) : (
           <FullScreen image={objectImage} clickBack={() => {

@@ -86,7 +86,7 @@ function ProfileScreen({ navigation }) {
     onClickImage ? (
       <FullScreen image={image} clickBack={() => {
         setOnClickImage(false)
-      }}/>
+      }} navigation={navigation}/>
     ) : (
       <View>
         <Modal

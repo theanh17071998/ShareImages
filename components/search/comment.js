@@ -32,7 +32,9 @@ export default function Comments(props) {
         if (userTemp) {
             socket.emit('clientJoinRoom', JSON.parse(userTemp).userName)
             socket.on('serverUpdateFullScreen', (imageId) => {
-              getData()
+              if (imageId == props.imageid) {
+                getData()
+              }
             })
         }
     })

@@ -25,7 +25,7 @@ const windowWidth = Dimensions.get('window').width;
 const screenWidth = (percent) => (windowWidth * percent) / 100;
 const windowHeight = Dimensions.get('window').height;
 const screenHeight = (percent) => (windowHeight * percent) / 100
-const testNav = 'Notification'
+const testNav = 'Home'
 
 function FullScreen(props) {
     const { socket } = useContext(UserContext)
@@ -55,6 +55,24 @@ function FullScreen(props) {
                             userName: JSON.parse(userTemp).userName,
                             imageId: image._id
                         })
+                        // if (image.userId != user.userId) {
+                        //     socket.emit('userlikeImage', {
+                        //         content: `${user.userName} Đã thả thương thương cho một ảnh của bạn, Đến xem ngay!`,
+                        //         userId: user.userId,
+                        //         fromUserName: user.userName,
+                        //         imageId: image._id,
+                        //         to: image.user.userName,
+                        //         avatar: user.avatarUrl
+                        //     })
+                        // }
+                        socket.emit('userlikeImage', {
+                            content: `${user.userName} Đã thả thương thương cho một ảnh của bạn, Đến xem ngay!`,
+                            userId: user.userId,
+                            fromUserName: user.userName,
+                            imageId: image._id,
+                            to: image.user.userName,
+                            avatar: user.avatarUrl
+                        })
                     }
                 })
                 .catch((err) => {
@@ -71,21 +89,23 @@ function FullScreen(props) {
                 setUser(JSON.parse(userTemp))
                 socket.emit('clientJoinRoom', JSON.parse(userTemp).userName)
                 socket.on('serverUpdateFullScreen', (imageId) => {
-                    fetch(API.GET_IMAGE_BY_IMAGEID + `/${imageId}`, {
-                        headers: jsonHeader.headers,
-                        method: 'GET'
-                    }).then(response => response.json())
-                        .then((res) => {
-                            // console.log(res)
-                            if (res.code == 200) {
-                                setImage(res.data.images)
-                                // console.log(image)
-                            }
-                        })
-                        .catch((err) => {
-                            console.log(err)
-    
-                        })
+                    if (imageId == image._id) {
+                        fetch(API.GET_IMAGE_BY_IMAGEID + `/${imageId}`, {
+                            headers: jsonHeader.headers,
+                            method: 'GET'
+                        }).then(response => response.json())
+                            .then((res) => {
+                                // console.log(res)
+                                if (res.code == 200) {
+                                    setImage(res.data.images)
+                                    // console.log(image)
+                                }
+                            })
+                            .catch((err) => {
+                                console.log(err)
+        
+                            })
+                    }
                 })
             }
         })
@@ -111,10 +131,24 @@ function FullScreen(props) {
                                 userName: JSON.parse(userTemp).userName,
                                 imageId: image._id
                             })
-                            showMessage({   
-                                message: "Success",
-                                type: "success",
-                            });
+                            // if (image.userId != user.userId) {
+                            //     socket.emit('userCommentImage', {
+                            //         content: `${user.userName}Đã bình luận về một ảnh của bạn, Đến xem ngay!`,
+                            //         userId: user.userId,
+                            //         fromUserName: user.userName,
+                            //         imageId: image._id,
+                            //         to: image.user.userName,
+                            //         avatar: user.avatarUrl
+                            //     })
+                            // }
+                            socket.emit('userCommentImage', {
+                                content: `${user.userName} Đã bình luận về một ảnh của bạn, Đến xem ngay!`,
+                                userId: user.userId,
+                                fromUserName: user.userName,
+                                imageId: image._id,
+                                to: image.user.userName,
+                                avatar: user.avatarUrl
+                            })
                         }
                     })
                     .catch((err) => {
@@ -182,9 +216,8 @@ function FullScreen(props) {
                     <Comments imageid={image._id} user={user} />
                 </ScrollView>
             </View>
-            <FlashMessage position="right" duration={1500} onPress={ () => props.navigation.jumpTo(testNav, { owner: 'Michaś' }) } />
+            <FlashMessage position="right" duration={500} />
         </View>
-
     )
 }
 
