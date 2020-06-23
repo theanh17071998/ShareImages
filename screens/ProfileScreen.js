@@ -14,7 +14,7 @@ const screenWidth = (percent) => (windowWidth * percent)/ 100;
 const windowHeight = Dimensions.get('window').height;
 const screenHeight = (percent) => (windowHeight * percent)/ 100
 
-function ProfileScreen() {
+function ProfileScreen({ navigation }) {
 
   const [user, setUser] = useState(null)
   const [image, setImage] = useState({})

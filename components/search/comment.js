@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,12 +7,14 @@ import {
   Image,
   ScrollView,
   FlatList,
-  Dimensions
+  Dimensions,
+  AsyncStorage
 } from 'react-native';
 import { Card, Header, SearchBar } from 'react-native-elements'
 import { API } from '../../constants/api'
 import { Props } from 'react-native-image-zoom-viewer/built/image-viewer.type'
 import { postMethod, jsonHeader, getMethod } from '../../constants/fetchTool'
+import UserContext from '../../contexts/UserContext'
 
 const windowWidth = Dimensions.get('window').width;
 const screenWidth = (percent) => (windowWidth * percent) / 100;
@@ -20,11 +22,20 @@ const windowHeight = Dimensions.get('window').height;
 const screenHeight = (percent) => (windowHeight * percent) / 100
 
 export default function Comments(props) {
+  const { socket } = useContext(UserContext)
 
   const [data, setData] = useState([]);
 
   useEffect(() => {
     getData()
+    AsyncStorage.getItem('user').then((userTemp) => {
+        if (userTemp) {
+            socket.emit('clientJoinRoom', JSON.parse(userTemp).userName)
+            socket.on('serverUpdateFullScreen', (imageId) => {
+              getData()
+            })
+        }
+    })
   }, [])
 
   const getData = () => {
@@ -34,9 +45,9 @@ export default function Comments(props) {
     }).then(response => response.json())
       .then((res) => {
         if (res.code == 200) {
-          setData(res.data.comments)
-          console.log('asdas')
-          console.log(res.data.comments)
+          setData(res.data.comments.reverse())
+          // console.log('asdas')
+          // console.log(res.data.comments)
         }
       })
       .catch((err) => {

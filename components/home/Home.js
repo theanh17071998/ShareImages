@@ -16,7 +16,7 @@ const windowHeight = Dimensions.get('window').height;
 const screenHeight = (percent) => (windowHeight * percent) / 100
 
 
-function Home() {
+function Home(props) {
 
   // const [images, setImages] = useState([])
 
@@ -94,7 +94,7 @@ function Home() {
       ) : (
           <FullScreen image={objectImage} clickBack={() => {
             setPressImage(false)
-          }} />
+          }} navigation={props.navigation} />
         )
     ) : (
         <PostImage back={() => { setPressPostImage(false) }} />

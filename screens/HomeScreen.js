@@ -12,10 +12,10 @@ const windowHeight = Dimensions.get('window').height;
 const screenHeight = (percent) => (windowHeight * percent) / 100
 
 
-function HomeScreen() {
+function HomeScreen({ navigation }) {
   return (
     <View>
-      <Home />
+      <Home navigation={navigation} />
     </View>
 
   )

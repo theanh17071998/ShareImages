@@ -53,7 +53,6 @@ function App() {
     socket.on('serverLogin', async () => {
       const userTemp = await AsyncStorage.getItem('user')
       setUser(JSON.parse(userTemp))
-      console.log(user)
       socket.emit('clientJoinRoom', user.userName)
     })
   }

@@ -2,10 +2,10 @@ import * as React from 'react'
 import { Button, View, Text } from 'react-native'
 import Search from '../components/search/index'
 
-function SearchScreen() {
+function SearchScreen({ navigation }) {
   return (
       <View>
-        <Search/>
+        <Search navigation={navigation}/>
       </View>
   )
 }

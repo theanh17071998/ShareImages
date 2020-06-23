@@ -9,7 +9,7 @@ import FullScreen from './FullScreen'
 import { API } from '../../constants/api'
 import { postMethod, jsonHeader } from '../../constants/fetchTool'
 
-function Search() {
+function Search(props) {
 
     const [clickedImage, setClick] = useState(false)
     const [objectImage, setObjectImage] = useState()
@@ -70,7 +70,7 @@ function Search() {
                 <GridImage click={listenClickImage} clickBack={listenClickBack} />
             </ScrollView>
         ) : (
-                <FullScreen clickBack={listenClickBack} image={objectImage} />
+                <FullScreen clickBack={listenClickBack} image={objectImage} navigation={props.navigation} />
             )
 
     )
