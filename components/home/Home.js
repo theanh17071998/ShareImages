@@ -35,19 +35,22 @@ function Home(props) {
         if (userTemp) {
             setUser(JSON.parse(userTemp))
             socket.emit('clientJoinRoom', JSON.parse(userTemp).userName)
-            socket.on('serverLikeImage', (notify) => {
-              showMessage({   
-                message: "Hello World",
-                description: "This is our second message",
-                type: "success",
-              });
-            })
-            socket.on('serverCommentImage', (notify) => {
-              showMessage({   
-                message: "Hello World",
-                description: "This is our second message",
-                type: "success",
-              });
+            socket.on('serverClickNotify', (notify) => {
+              fetch(API.GET_IMAGE_BY_IMAGEID + `/${notify.imageId}`, {
+                  headers: jsonHeader.headers,
+                  method: 'GET'
+              }).then(response => response.json())
+                  .then((res) => {
+                      if (res.code == 200) {
+                        setObjectImage(res.data.images)
+                          // console.log(image)
+                          setPressImage(true)
+                      }
+                  })
+                  .catch((err) => {
+                      console.log(err)
+
+                  })
             })
         }
     })
@@ -112,7 +115,6 @@ function Home(props) {
               listContainerStyle={styles.listContainer}
             />
           </ScrollView>
-          <FlashMessage position="top" duration={2000} />
         </View>
       ) : (
           <FullScreen image={objectImage} clickBack={() => {

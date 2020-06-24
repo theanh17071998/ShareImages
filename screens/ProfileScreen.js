@@ -7,6 +7,8 @@ import UserContext from '../contexts/UserContext'
 import setting from '../assets/gear.png'
 import { API } from '../constants/api'
 import { postMethod, jsonHeader } from '../constants/fetchTool'
+import { showMessage, hideMessage } from "react-native-flash-message";
+import FlashMessage from "react-native-flash-message";
 import FullScreen from '../components/search/FullScreen'
 
 const windowWidth = Dimensions.get('window').width;

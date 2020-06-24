@@ -10,6 +10,8 @@ import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://192.168.43.171:3000";
 import { AsyncStorage } from 'react-native'
 import { UserProvider } from './contexts/UserContext'
+import { showMessage, hideMessage } from "react-native-flash-message";
+import FlashMessage from "react-native-flash-message";
 
 console.disableYellowBox = true; 
 
@@ -39,6 +41,23 @@ function App() {
     setUser(null)
   }
   const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    socket.on('serverLikeImage', (notify) => {
+      showMessage({   
+        message: 'Thông báo mới',
+        description: notify.content,
+        type: "success",
+      });
+    })
+    socket.on('serverCommentImage', (notify) => {
+      showMessage({   
+        message: 'Thông báo mới',
+        description: notify.content,
+        type: "success",
+      });
+    })
+  }, [])
 
   function fetchData() {
     AsyncStorage.getItem('user').then((userTemp) => {
@@ -123,6 +142,7 @@ function App() {
             </Tab.Screen>
             <Tab.Screen name="Profile" component={ProfileScreen} />
           </Tab.Navigator>
+          <FlashMessage position="right" duration={3000} />
         </NavigationContainer>
       </UserProvider>
     ) : (

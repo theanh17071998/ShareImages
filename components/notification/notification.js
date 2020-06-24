@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Button, View, Text, Dimensions, StyleSheet, AsyncStorage} from 'react-native'
+import { Button, View, Text, Dimensions, StyleSheet, AsyncStorage, TouchableOpacity} from 'react-native'
 import { ListItem, Header} from 'react-native-elements'
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import UserContext from '../../contexts/UserContext'
 import { API } from '../../constants/api'
 import { postMethod, jsonHeader } from '../../constants/fetchTool'
-// import { showMessage, hideMessage } from "react-native-flash-message";
+import { showMessage, hideMessage } from "react-native-flash-message";
 // import FlashMessage from "react-native-flash-message";
 
 const windowWidth = Dimensions.get('window').width;
@@ -13,7 +13,7 @@ const screenWidth = (percent) => (windowWidth * percent)/ 100;
 const windowHeight = Dimensions.get('window').height;
 const screenHeight = (percent) => (windowHeight * percent)/ 100
 
-export default function Notification() {
+export default function Notification(props) {
     const { socket } = useContext(UserContext)
     const [user, setUser] = useState(null)
     const [listNotify, setListNotify] = useState([])
@@ -25,7 +25,9 @@ export default function Notification() {
               socket.emit('clientJoinRoom', JSON.parse(userTemp).userName)
               socket.on('serverUpdateNotify', (notifyResult) => {
                 getData(JSON.parse(userTemp).token)
-                console.log('TEST2')
+              })
+              socket.on('serverClickNotify', (notify) => {
+                props.navigation.jumpTo('Home')
               })
               getData(JSON.parse(userTemp).token)
           }
@@ -61,13 +63,16 @@ export default function Notification() {
         <ScrollView showsVerticalScrollIndicator={false}  >
           <View style={styles.listItem}>
             {
-              listNotify.map((l, i) => (
+              listNotify.reverse().map((l, i) => (
                 <ListItem
                   key={i}
                   leftAvatar={{ source: { uri: l.avatar } }}
                   title={l.fromUserName}
                   subtitle={l.content}
                   bottomDivider
+                  onPress={ () => {
+                    socket.emit('clientClickNotify', l)
+                  }}
                 />
               ))
             }

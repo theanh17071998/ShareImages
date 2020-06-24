@@ -10,11 +10,13 @@ import {
   Dimensions,
   AsyncStorage
 } from 'react-native';
-import { Card, Header, SearchBar } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/FontAwesome'
+import { Card, Header, SearchBar, Button } from 'react-native-elements'
 import { API } from '../../constants/api'
 import { Props } from 'react-native-image-zoom-viewer/built/image-viewer.type'
 import { postMethod, jsonHeader, getMethod } from '../../constants/fetchTool'
 import UserContext from '../../contexts/UserContext'
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 const windowWidth = Dimensions.get('window').width;
 const screenWidth = (percent) => (windowWidth * percent) / 100;
@@ -35,6 +37,22 @@ export default function Comments(props) {
               if (imageId == props.imageid) {
                 getData()
               }
+            })
+            socket.on('serverClickNotify', (notify) => {
+              fetch(API.GET_COMMENT_BY_IMAGEID + notify.imageId, {
+                headers: jsonHeader.headers,
+                method: getMethod.method,
+              }).then(response => response.json())
+                .then((res) => {
+                  if (res.code == 200) {
+                    setData(res.data.comments.reverse())
+                    // console.log('asdas')
+                    // console.log(res.data.comments)
+                  }
+                })
+                .catch((err) => {
+                  console.log(err)
+                })
             })
         }
     })
@@ -81,10 +99,43 @@ return (
             <View style={styles.contentHeader}>
               <Text style={styles.name}>{Notification.user.userName}</Text>
               <Text style={styles.time}>
-                {Date(Notification.date).split(' ')[3] +' ' + Date(Notification.date).split(' ')[4]}
-                  </Text>
+                {`${
+                  new Date(Notification.date).getHours() + ':' + 
+                  new Date(Notification.date).getMinutes() + ':' + 
+                  new Date(Notification.date).getSeconds() + ' ' + 'Ngày ' +
+                  new Date(Notification.date).getDate() + '/' + 
+                  (new Date(Notification.date).getMonth() + 1) + '/' + 
+                  new Date(Notification.date).getFullYear() + '  '
+                }`}
+              </Text>
             </View>
             <Text rkType='primary3 mediumLine'>{Notification.content}</Text>
+          </View>
+          <View>
+            <Button
+              icon={
+                <Icon
+                  name="trash-o"
+                  size={10}
+                  color="white"
+                />
+              }
+              iconRight
+              title=""
+              buttonStyle={{ backgroundColor: '#dc3545', marginBottom: 3 }}
+            />
+            <Button
+              icon={
+                <Icon
+                  name="edit"
+                  size={10}
+                  color="white"
+                />
+              }
+              iconRight
+              title=""
+              buttonStyle={{ backgroundColor: '#ffc107' }}
+            />
           </View>
         </View>
       );

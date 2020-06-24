@@ -15,9 +15,6 @@ function Avartar(props) {
   const [image, setImage] = useState(null)
   const [srcImage, setSrcImage] = useState('https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png')
   const { socket } = useContext(UserContext)
-  socket.on('test', () => {
-    console.log('TEST')
-  })
   useEffect(() => {
     (async () => {
       if (Constants.platform.ios) {

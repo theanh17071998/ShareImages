@@ -36,6 +36,16 @@ function FullScreen(props) {
     }
     const [comment, setComment] = useState('')
 
+    function checkLike(list) {
+        let status = false
+        list.forEach((object) => {
+            if (user.userName == object.userName) {
+                status = true
+            }
+        })
+        return status
+    }
+
     const likeImage = () => {
         AsyncStorage.getItem('user').then((userTemp) => {
             // console.log(JSON.parse(userTemp).token)
@@ -55,24 +65,26 @@ function FullScreen(props) {
                             userName: JSON.parse(userTemp).userName,
                             imageId: image._id
                         })
-                        // if (image.userId != user.userId) {
-                        //     socket.emit('userlikeImage', {
-                        //         content: `${user.userName} Đã thả thương thương cho một ảnh của bạn, Đến xem ngay!`,
-                        //         userId: user.userId,
-                        //         fromUserName: user.userName,
-                        //         imageId: image._id,
-                        //         to: image.user.userName,
-                        //         avatar: user.avatarUrl
-                        //     })
-                        // }
-                        socket.emit('userlikeImage', {
-                            content: `${user.userName} Đã thả thương thương cho một ảnh của bạn, Đến xem ngay!`,
-                            userId: user.userId,
-                            fromUserName: user.userName,
-                            imageId: image._id,
-                            to: image.user.userName,
-                            avatar: user.avatarUrl
-                        })
+                        if (checkLike(res.data.data.listUserLike)) {
+                            // if (image.userId != user.userId) {
+                            //     socket.emit('userlikeImage', {
+                            //         content: `${user.userName} Đã thả thương thương cho một ảnh của bạn, Đến xem ngay!`,
+                            //         userId: user.userId,
+                            //         fromUserName: user.userName,
+                            //         imageId: image._id,
+                            //         to: image.user.userName,
+                            //         avatar: user.avatarUrl
+                            //     })
+                            // }
+                            socket.emit('userlikeImage', {
+                                content: `${user.userName} Đã thả thương thương cho một ảnh của bạn, Đến xem ngay!`,
+                                userId: image.user.userId,
+                                fromUserName: user.userName,
+                                imageId: image._id,
+                                to: image.user.userName,
+                                avatar: user.avatarUrl
+                            })
+                        }
                     }
                 })
                 .catch((err) => {
@@ -106,6 +118,20 @@ function FullScreen(props) {
         
                             })
                     }
+                })
+                socket.on('serverClickNotify', (notify) => {
+                    fetch(API.GET_IMAGE_BY_IMAGEID + `/${notify.imageId}`, {
+                        headers: jsonHeader.headers,
+                        method: 'GET'
+                    }).then(response => response.json())
+                        .then((res) => {
+                            if (res.code == 200) {
+                                setImage(res.data.images)
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
                 })
             }
         })
@@ -143,7 +169,7 @@ function FullScreen(props) {
                             // }
                             socket.emit('userCommentImage', {
                                 content: `${user.userName} Đã bình luận về một ảnh của bạn, Đến xem ngay!`,
-                                userId: user.userId,
+                                userId: image.user.userId,
                                 fromUserName: user.userName,
                                 imageId: image._id,
                                 to: image.user.userName,
@@ -216,7 +242,6 @@ function FullScreen(props) {
                     <Comments imageid={image._id} user={user} />
                 </ScrollView>
             </View>
-            <FlashMessage position="right" duration={500} />
         </View>
     )
 }
