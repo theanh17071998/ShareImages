@@ -66,24 +66,24 @@ function FullScreen(props) {
                             imageId: image._id
                         })
                         if (checkLike(res.data.data.listUserLike)) {
-                            // if (image.userId != user.userId) {
-                            //     socket.emit('userlikeImage', {
-                            //         content: `${user.userName} Đã thả thương thương cho một ảnh của bạn, Đến xem ngay!`,
-                            //         userId: user.userId,
-                            //         fromUserName: user.userName,
-                            //         imageId: image._id,
-                            //         to: image.user.userName,
-                            //         avatar: user.avatarUrl
-                            //     })
-                            // }
-                            socket.emit('userlikeImage', {
-                                content: `${user.userName} Đã thả thương thương cho một ảnh của bạn, Đến xem ngay!`,
-                                userId: image.user.userId,
-                                fromUserName: user.userName,
-                                imageId: image._id,
-                                to: image.user.userName,
-                                avatar: user.avatarUrl
-                            })
+                            if (image.userId != user.userId) {
+                                socket.emit('userlikeImage', {
+                                    content: `${user.userName} Đã thả thương thương cho một ảnh của bạn, Đến xem ngay!`,
+                                    userId: user.userId,
+                                    fromUserName: user.userName,
+                                    imageId: image._id,
+                                    to: image.user.userName,
+                                    avatar: user.avatarUrl
+                                })
+                            }
+                            // socket.emit('userlikeImage', {
+                            //     content: `${user.userName} Đã thả thương thương cho một ảnh của bạn, Đến xem ngay!`,
+                            //     userId: image.user.userId,
+                            //     fromUserName: user.userName,
+                            //     imageId: image._id,
+                            //     to: image.user.userName,
+                            //     avatar: user.avatarUrl
+                            // })
                         }
                     }
                 })
@@ -157,24 +157,24 @@ function FullScreen(props) {
                                 userName: JSON.parse(userTemp).userName,
                                 imageId: image._id
                             })
-                            // if (image.userId != user.userId) {
-                            //     socket.emit('userCommentImage', {
-                            //         content: `${user.userName}Đã bình luận về một ảnh của bạn, Đến xem ngay!`,
-                            //         userId: user.userId,
-                            //         fromUserName: user.userName,
-                            //         imageId: image._id,
-                            //         to: image.user.userName,
-                            //         avatar: user.avatarUrl
-                            //     })
-                            // }
-                            socket.emit('userCommentImage', {
-                                content: `${user.userName} Đã bình luận về một ảnh của bạn, Đến xem ngay!`,
-                                userId: image.user.userId,
-                                fromUserName: user.userName,
-                                imageId: image._id,
-                                to: image.user.userName,
-                                avatar: user.avatarUrl
-                            })
+                            if (image.userId != user.userId) {
+                                socket.emit('userCommentImage', {
+                                    content: `${user.userName}Đã bình luận về một ảnh của bạn, Đến xem ngay!`,
+                                    userId: user.userId,
+                                    fromUserName: user.userName,
+                                    imageId: image._id,
+                                    to: image.user.userName,
+                                    avatar: user.avatarUrl
+                                })
+                            }
+                            // socket.emit('userCommentImage', {
+                            //     content: `${user.userName} Đã bình luận về một ảnh của bạn, Đến xem ngay!`,
+                            //     userId: image.user.userId,
+                            //     fromUserName: user.userName,
+                            //     imageId: image._id,
+                            //     to: image.user.userName,
+                            //     avatar: user.avatarUrl
+                            // })
                         }
                     })
                     .catch((err) => {

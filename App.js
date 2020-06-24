@@ -7,7 +7,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import socketIOClient from "socket.io-client";
 // const ENDPOINT = "http://192.168.23.102:3000";
-const ENDPOINT = "http://192.168.43.171:3000";
+const ENDPOINT = "https://uet-japit-bot-discord.herokuapp.com";
 import { AsyncStorage } from 'react-native'
 import { UserProvider } from './contexts/UserContext'
 import { showMessage, hideMessage } from "react-native-flash-message";
