@@ -69,7 +69,7 @@ function FullScreen(props) {
                             if (image.userId != user.userId) {
                                 socket.emit('userlikeImage', {
                                     content: `${user.userName} Đã thả thương thương cho một ảnh của bạn, Đến xem ngay!`,
-                                    userId: user.userId,
+                                    userId: image.user.userId,
                                     fromUserName: user.userName,
                                     imageId: image._id,
                                     to: image.user.userName,
@@ -160,7 +160,7 @@ function FullScreen(props) {
                             if (image.userId != user.userId) {
                                 socket.emit('userCommentImage', {
                                     content: `${user.userName}Đã bình luận về một ảnh của bạn, Đến xem ngay!`,
-                                    userId: user.userId,
+                                    userId: image.user.userId,
                                     fromUserName: user.userName,
                                     imageId: image._id,
                                     to: image.user.userName,
