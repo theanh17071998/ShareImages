@@ -208,55 +208,61 @@ return (
             </View>
             <Text rkType='primary3 mediumLine'>{Comment.content}</Text>
           </View>
-          <View>
-            <Button
-              icon={
-                <Icon
-                  name="trash-o"
-                  size={10}
-                  color="white"
+          {
+            item.item.user.userId == user.userId ? (
+              <View>
+                <Button
+                  icon={
+                    <Icon
+                      name="trash-o"
+                      size={10}
+                      color="white"
+                    />
+                  }
+                  iconRight
+                  title=""
+                  buttonStyle={{ backgroundColor: '#dc3545', marginBottom: 3 }}
+                  onPress={ () => {
+                    setCommentId(item.item._id)
+                    Alert.alert(
+                      "Xóa bình luận",
+                      "Bạn có chắc chắn muốn xóa bình luận này không?",
+                      [
+                        {
+                          text: "Thôi",
+                          onPress: () => console.log("Cancel Pressed"),
+                          style: "cancel"
+                        },
+                        { text: "Xóa luôn", onPress: () => {
+                          console.log('XÓa')
+                          deleteComment()
+                        }}
+                      ],
+                      { cancelable: false }
+                    )
+                  }}
                 />
-              }
-              iconRight
-              title=""
-              buttonStyle={{ backgroundColor: '#dc3545', marginBottom: 3 }}
-              onPress={ () => {
-                setCommentId(item.item._id)
-                Alert.alert(
-                  "Xóa bình luận",
-                  "Bạn có chắc chắn muốn xóa bình luận này không?",
-                  [
-                    {
-                      text: "Thôi",
-                      onPress: () => console.log("Cancel Pressed"),
-                      style: "cancel"
-                    },
-                    { text: "Xóa luôn", onPress: () => {
-                      console.log('XÓa')
-                      deleteComment()
-                    }}
-                  ],
-                  { cancelable: false }
-                )
-              }}
-            />
-            <Button
-              icon={
-                <Icon
-                  name="edit"
-                  size={10}
-                  color="white"
+                <Button
+                  icon={
+                    <Icon
+                      name="edit"
+                      size={10}
+                      color="white"
+                    />
+                  }
+                  iconRight
+                  title=""
+                  buttonStyle={{ backgroundColor: '#ffc107' }}
+                  onPress={ () => {
+                    setCommentId(item.item._id)
+                    setModalVisible(true)
+                  }}
                 />
-              }
-              iconRight
-              title=""
-              buttonStyle={{ backgroundColor: '#ffc107' }}
-              onPress={ () => {
-                setCommentId(item.item._id)
-                setModalVisible(true)
-              }}
-            />
-          </View>
+              </View>
+            ) : (
+              <View></View>
+            )
+          }
         </View>
       );
     }} />
