@@ -20,6 +20,8 @@ const API = {
   COMMENT: `${config.BACKEND_ADDRESS}/api/comments`,
   LIKE_IMAGE: `${config.BACKEND_ADDRESS}/api/images/`,
   UPDATE_PROFILE: `${config.BACKEND_ADDRESS}/api/users`,
+  UPDATE_COMMENT_BY_COMMENTID: `${config.BACKEND_ADDRESS}/api/comments`,
+  DELETE_COMMENT_BY_COMMENTID: `${config.BACKEND_ADDRESS}/api/comments`,
   GET_IMAGES_BY_USERID: `${config.BACKEND_ADDRESS}/api/images/user`,
   GET_NOTIFYS_BY_USERID: `${config.BACKEND_ADDRESS}/api/notify`
 }
