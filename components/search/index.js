@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, Image, Alert, ScrollView, ImageBackground, Dimensions } from 'react-native'
+import React, { useState, useEffect, useContext } from 'react'
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, AsyncStorage, Dimensions } from 'react-native'
 import { Container, Header, Item, Input } from 'native-base';
 import { SearchBar, Tile } from 'react-native-elements'
 import { exp, block } from 'react-native-reanimated'
@@ -8,13 +8,23 @@ import GridImage from './GridImage'
 import FullScreen from './FullScreen'
 import { API } from '../../constants/api'
 import { postMethod, jsonHeader } from '../../constants/fetchTool'
+import UserContext from '../../contexts/UserContext'
 
 function Search(props) {
 
     const [clickedImage, setClick] = useState(false)
     const [objectImage, setObjectImage] = useState()
+    const [user, setUser] = useState({})
     const { height, width } = Dimensions.get('window')
     const [clickback, setClickBack] = useState(false)
+    const { socket } = useContext(UserContext)
+
+    function getImagesByTag(tag) {
+        socket.emit('clientClickSearchTag', {
+            to: user.userName,
+            tag: tag
+        })
+    }
 
     const listenClickImage = (object) => {
         setObjectImage(object)
@@ -26,6 +36,15 @@ function Search(props) {
         setClickBack(true)
         setClick(false)
     }
+
+    useEffect(() => {
+        AsyncStorage.getItem('user').then((userTemp) => {
+            if (userTemp) {
+                setUser(JSON.parse(userTemp))
+                socket.emit('clientJoinRoom', JSON.parse(userTemp).userName)
+            }
+        })
+    }, [])
 
     return (
         clickedImage == false ? (
@@ -54,15 +73,36 @@ function Search(props) {
 
                         <View style={styles.topicContainer}>
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                                <Topic imageUrl={require('../../assets/topic/phongcanh.jpg')} name='Phong cảnh' />
-                                <Topic imageUrl={require('../../assets/b72e2df60fbc06a54ff1e98cc79a1f7c.jpg')} name='Gái xinh' />
-                                <Topic imageUrl={require('../../assets/topic/phongcanh.jpg')} name='Phong cảnh' />
-                                <Topic imageUrl={require('../../assets/b72e2df60fbc06a54ff1e98cc79a1f7c.jpg')} name='Gái xinh' />
-                                <Topic imageUrl={require('../../assets/b72e2df60fbc06a54ff1e98cc79a1f7c.jpg')} name='Gái xinh' />
-                                <Topic imageUrl={require('../../assets/b72e2df60fbc06a54ff1e98cc79a1f7c.jpg')} name='Gái xinh' />
-                                <Topic imageUrl={require('../../assets/b72e2df60fbc06a54ff1e98cc79a1f7c.jpg')} name='Gái xinh' />
-                                <Topic imageUrl={require('../../assets/b72e2df60fbc06a54ff1e98cc79a1f7c.jpg')} name='Gái xinh' />
-                                <Topic imageUrl={require('../../assets/b72e2df60fbc06a54ff1e98cc79a1f7c.jpg')} name='Gái xinh' />
+                                <TouchableOpacity
+                                    onPress={ () => { getImagesByTag('tinh-yeu') } }
+                                >
+                                    <Topic imageUrl={require('../../assets/tinh-yeu.jpg')} name='Tình Yêu' />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={ () => { getImagesByTag('tre-con') } }
+                                >
+                                    <Topic imageUrl={require('../../assets/tre-con.jpg')} name='Trẻ Con' />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={ () => { getImagesByTag('naruto') } }
+                                >
+                                    <Topic imageUrl={require('../../assets/naruto.jpg')} name='Naruto' />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={ () => { getImagesByTag('sasuke') } }
+                                >
+                                    <Topic imageUrl={require('../../assets/sasuke.png')} name='Sasuke' />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={ () => { getImagesByTag('nam-dep-trai') } }
+                                >
+                                    <Topic imageUrl={require('../../assets/trai-dep.jpg')} name='Trai Đẹp' />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={ () => { getImagesByTag('gai-xinh') } }
+                                >
+                                    <Topic imageUrl={require('../../assets/girl_biker.jpg')} name='Gái Xinh' />
+                                </TouchableOpacity>
                             </ScrollView>
                         </View>
                     </View>

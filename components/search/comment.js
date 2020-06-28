@@ -194,7 +194,7 @@ return (
           </TouchableOpacity>
           <View style={styles.content}>
             <View style={styles.contentHeader}>
-              <Text style={styles.name}>{Comment.user.userName}</Text>
+              <Text style={styles.name}>{Comment.user.fullName}</Text>
               <Text style={styles.time}>
                 {`${
                   new Date(Comment.date).getHours() + ':' + 

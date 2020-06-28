@@ -204,7 +204,7 @@ function FullScreen(props) {
                             {
                                 <ListItem
                                     leftAvatar={{ source: { uri: image.user.avatarUrl } }}
-                                    title={image.user.userName}
+                                    title={image.user.fullName}
                                 />
                             }
                         </View>
@@ -219,10 +219,42 @@ function FullScreen(props) {
                                 }}
                                 onPress={() => { likeImage() }}
                             />
-
-                            <Button
-                                buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0, width: screenWidth(30), backgroundColor: 'red', borderRadius: 5 }}
-                                title='Lưu' />
+                            {
+                                props.image.userId != (user ? user.userId : 'ERROR') ? (
+                                    <Button
+                                        buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0, width: screenWidth(30), backgroundColor: 'red', borderRadius: 5 }}
+                                        title='Lưu'
+                                        onPress={ () => {
+                                            fetch(API.CREATE_IMAGE, {
+                                                headers: jsonHeader.headers,
+                                                method: postMethod.method,
+                                                body: JSON.stringify({
+                                                    token: user.token,
+                                                    tags: props.image.tags,
+                                                    title: props.image.title,
+                                                    uri: props.image.uri
+                                                })
+                                                }).then(response => response.json())
+                                                .then((res) => {
+                                                    if (res.code == 200) {
+                                                        showMessage({   
+                                                            message: 'Thông báo',
+                                                            description: 'Lưu thành công',
+                                                            type: "success",
+                                                        });
+                                                    } else {
+                                                        console.log('ERROR')
+                                                    }
+                                                })
+                                                .catch((err) => {
+                                                    console.log(err)
+                                                })
+                                        }}
+                                        />
+                                ) : (
+                                    <View></View>
+                                )
+                            }
                         </View>
                     </Card>
                     <Input

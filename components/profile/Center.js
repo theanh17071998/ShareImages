@@ -22,6 +22,11 @@ function CenterProfile(props) {
 
   const [images, setImages] = useState([])
   const { socket } = useContext(UserContext)
+  AsyncStorage.getItem('imagesHome').then((image) => {
+    if (image) {
+      setImages(JSON.parse(image))
+    }
+  })
 
   function getImages() {
     fetch(API.GET_IMAGES_BY_USERID + `/${props.user.userId}`, {
@@ -30,6 +35,7 @@ function CenterProfile(props) {
     }).then(response => response.json())
       .then((res) => {
         setImages(res.data.images)
+        // console.log(res.data.images.length)
         if (res.code == 200) {
         } else {
           console.log(res)

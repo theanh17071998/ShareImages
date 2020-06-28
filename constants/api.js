@@ -23,7 +23,9 @@ const API = {
   UPDATE_COMMENT_BY_COMMENTID: `${config.BACKEND_ADDRESS}/api/comments`,
   DELETE_COMMENT_BY_COMMENTID: `${config.BACKEND_ADDRESS}/api/comments`,
   GET_IMAGES_BY_USERID: `${config.BACKEND_ADDRESS}/api/images/user`,
-  GET_NOTIFYS_BY_USERID: `${config.BACKEND_ADDRESS}/api/notify`
+  GET_NOTIFYS_BY_USERID: `${config.BACKEND_ADDRESS}/api/notify`,
+  CREATE_IMAGE: `${config.BACKEND_ADDRESS}/api/images`,
+  GET_IMAGES_BY_TAG: `${config.BACKEND_ADDRESS}/api/images/search`
 }
 
 const SOCKET_EVENT = {

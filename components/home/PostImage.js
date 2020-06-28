@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, Text, StyleSheet, Dimensions, Picker, TouchableOpacity, Image, Button } from 'react-native'
 import MasonryList from "react-native-masonry-list";
 import { Card, Header } from 'react-native-elements';
@@ -6,10 +6,12 @@ import { API } from '../../constants/api'
 import { postMethod, jsonHeader, getMethod } from '../../constants/fetchTool'
 import { ScrollView } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { showMessage, hideMessage } from "react-native-flash-message";
 import { sin, call } from 'react-native-reanimated';
 import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker'
+import UserContext from '../../contexts/UserContext'
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -18,15 +20,19 @@ const windowHeight = Dimensions.get('window').height;
 const screenHeight = (percent) => (windowHeight * percent) / 100
 
 const listTagChoice = [
-    'Optional tag',
-    'tag2',
-    'tag3'
+    'tinh-yeu',
+    'tre-con',
+    'naruto',
+    'sasuke',
+    'nam-dep-trai',
+    'gai-xinh',
 ]
 
 function PostImage(props) {
 
     const [selectedValue, setSelectedValue] = useState();
-    const [listTag, setListTag] = useState([])
+    const { socket } = useContext(UserContext)
+    const [listTag, setListTag] = useState('naruto')
     const [title, setTitle] = useState()
     const [srcImage, setSrcImage] = useState('https://www.kindpng.com/picc/m/136-1369892_avatar-people-person-business-user-man-character-avatar.png')
 
@@ -40,6 +46,38 @@ function PostImage(props) {
             }
         })()
     })
+
+    function createImage () {
+        fetch(API.CREATE_IMAGE, {
+            headers: jsonHeader.headers,
+            method: postMethod.method,
+            body: JSON.stringify({
+                token: props.user.token,
+                tags: listTag,
+                title: title,
+                uri: srcImage
+            })
+            }).then(response => response.json())
+            .then((res) => {
+                if (res.code == 200) {
+                    socket.emit('clientClickNotify', {
+                        imageId: res.data.image._id,
+                        to: props.user.userName
+                    })
+                    showMessage({   
+                        message: 'Thông báo',
+                        description: 'Lưu thành công',
+                        type: "success",
+                    });
+                    props.navigation.jumpTo('Home')
+                } else {
+                    console.log('ERROR')
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -73,29 +111,17 @@ function PostImage(props) {
                 onChangeText={value => setTitle(value)}
             />
             <View style={{ flexDirection: 'row', padding: 5 }}>
-                {
-                    listTag.map(value => {
-                        return (
-                            <TouchableOpacity onPress={() => {
-                                setListTag((prevListTag) => {
-                                    return prevListTag.filter(index => index != value)
-                                })
-                            }}>
-                                <Text style={{ padding: 5, backgroundColor: 'gray', color: 'white', marginRight: 5, borderRadius: 5 }}
-                                >
-                                    {value}
-                                </Text>
-                            </TouchableOpacity>
-                        )
-                    })
-                }
+                <Text style={{ padding: 5, backgroundColor: 'gray', color: 'white', marginRight: 5, borderRadius: 5 }}
+                >
+                    {listTag}
+                </Text>
             </View>
             <Picker
                 selectedValue={selectedValue}
                 style={{ height: 50, width: 150 }}
                 onValueChange={(itemValue, itemIndex) => {
                     setSelectedValue(itemValue)
-                    setListTag([...listTag, itemValue])
+                    setListTag(itemValue)
                 }}
             >
                 {
@@ -110,6 +136,16 @@ function PostImage(props) {
                 <TouchableOpacity onPress={pickImage} style={{ justifyContent: 'center', alignContent: 'center', flexDirection: 'row' }}>
                     <Ionicons name='ios-add' size={24} style={{ paddingRight: 5, paddingTop: 3 }} />
                     <Ionicons name='ios-image' size={32} />
+                </TouchableOpacity>
+            </View>
+            <View>
+                <TouchableOpacity onPress={pickImage} style={{ justifyContent: 'center', alignContent: 'center', flexDirection: 'row' }}>
+                <Button
+                    onPress={ () => createImage() }
+                    title="Đăng ảnh"
+                    color="#841584"
+                    accessibilityLabel="Learn more about this purple button"
+                    />
                 </TouchableOpacity>
             </View>
         </View>

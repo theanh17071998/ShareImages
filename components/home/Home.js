@@ -44,7 +44,9 @@ function Home(props) {
                       if (res.code == 200) {
                         setObjectImage(res.data.images)
                           // console.log(image)
+                          setPressPostImage(false)
                           setPressImage(true)
+                          getData()
                       }
                   })
                   .catch((err) => {
@@ -69,6 +71,11 @@ function Home(props) {
   const [scrollCount, setScrollCount] = React.useState(0)
 
   const getData = () => {
+    AsyncStorage.getItem('imagesHome').then((image) => {
+      if (image) {
+          setData(JSON.parse(image))
+      }
+    })
 
     fetch(API.GET_HOME_IMAGE + scrollCount, {
       headers: jsonHeader.headers,
@@ -77,6 +84,7 @@ function Home(props) {
       .then((res) => {
         if (res.code == 200) {
           setData(res.data.data)
+          AsyncStorage.setItem('imagesHome', JSON.stringify(res.data.data))
         }
       })
       .catch((err) => {
@@ -102,18 +110,20 @@ function Home(props) {
           />
 
           <ScrollView showsVerticalScrollIndicator={false}  >
-            <MasonryList
-              columns={2}
-              sorted={true}
-              onPressImage={(object, index) => {
-                setObjectImage(object)
-                setPressImage(true)
-                console.log(object)
-              }}
-              images={data}
-              imageContainerStyle={styles.imgContainer}
-              listContainerStyle={styles.listContainer}
-            />
+            <View style={{ paddingBottom: 200 }}>
+              <MasonryList
+                columns={2}
+                sorted={true}
+                onPressImage={(object, index) => {
+                  setObjectImage(object)
+                  setPressImage(true)
+                  console.log(object)
+                }}
+                images={data}
+                imageContainerStyle={styles.imgContainer}
+                listContainerStyle={styles.listContainer}
+              />
+            </View>
           </ScrollView>
         </View>
       ) : (
@@ -122,7 +132,7 @@ function Home(props) {
           }} navigation={props.navigation} />
         )
     ) : (
-        <PostImage back={() => { setPressPostImage(false) }} />
+        <PostImage navigation={props.navigation} user={user} back={() => { setPressPostImage(false) }} />
       )
 
   )
