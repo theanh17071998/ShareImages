@@ -64,6 +64,7 @@ function PostImage(props) {
                         imageId: res.data.image._id,
                         to: props.user.userName
                     })
+                    socket.emit('clientSaveImage')
                     showMessage({   
                         message: 'Thông báo',
                         description: 'Lưu thành công',

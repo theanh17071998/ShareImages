@@ -68,7 +68,7 @@ function FullScreen(props) {
                         if (checkLike(res.data.data.listUserLike)) {
                             if (image.userId != user.userId) {
                                 socket.emit('userlikeImage', {
-                                    content: `${user.userName} Đã thả thương thương cho một ảnh của bạn, Đến xem ngay!`,
+                                    content: `${user.fullName}  Đã thả thương thương cho một ảnh của bạn, Đến xem ngay!`,
                                     userId: image.user.userId,
                                     fromUserName: user.userName,
                                     imageId: image._id,
@@ -159,7 +159,7 @@ function FullScreen(props) {
                             })
                             if (image.userId != user.userId) {
                                 socket.emit('userCommentImage', {
-                                    content: `${user.userName}Đã bình luận về một ảnh của bạn, Đến xem ngay!`,
+                                    content: `${user.fullName} Đã bình luận về một ảnh của bạn, Đến xem ngay!`,
                                     userId: image.user.userId,
                                     fromUserName: user.userName,
                                     imageId: image._id,
@@ -242,6 +242,7 @@ function FullScreen(props) {
                                                             description: 'Lưu thành công',
                                                             type: "success",
                                                         });
+                                                        socket.emit('clientSaveImage')
                                                     } else {
                                                         console.log('ERROR')
                                                     }

@@ -132,7 +132,7 @@ function ProfileScreen({ navigation }) {
             <View>
               <Header
                 placement="left"
-                centerComponent={{ text: user ? user.fullName : 'FULL NAME', style: { color: '#000', fontSize: 18, fontWeight: '700'}}}
+                centerComponent={{ text: user ? `HI! ${user.fullName}` : 'FULL NAME', style: { color: '#000', fontSize: 18, fontWeight: '700'}}}
                 containerStyle={{height: screenHeight(10), marginTop: -10,  backgroundColor: '#fff', borderBottomWidth: 2}}
                 rightComponent={{ icon: 'edit', color: '#000', borderRadius: '50%', onPress: () =>  setModalVisible(!modalVisible) }}
               />

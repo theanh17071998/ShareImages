@@ -95,7 +95,7 @@ function Info(props) {
       <View>
       </View>
       <View style={{ marginBottom: 4, marginTop: 7 }}>
-        <Button title={`${props.user ? props.user.listUserFlow.length : 0} Following`} />
+        <Button title={`${props.user ? props.user.fullName : 'NARUTO'}`} />
       </View>
       {/* <View>
         <Button title="12 Follower" />

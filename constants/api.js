@@ -25,7 +25,8 @@ const API = {
   GET_IMAGES_BY_USERID: `${config.BACKEND_ADDRESS}/api/images/user`,
   GET_NOTIFYS_BY_USERID: `${config.BACKEND_ADDRESS}/api/notify`,
   CREATE_IMAGE: `${config.BACKEND_ADDRESS}/api/images`,
-  GET_IMAGES_BY_TAG: `${config.BACKEND_ADDRESS}/api/images/search`
+  GET_IMAGES_BY_TAG: `${config.BACKEND_ADDRESS}/api/images/search`,
+  GET_IMAGES_BY_TEXT: `${config.BACKEND_ADDRESS}/api/images/search/text`
 }
 
 const SOCKET_EVENT = {

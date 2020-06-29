@@ -31,8 +31,6 @@ function ImageItem(props) {
     </View>
   )
 }
-
-
 const styles = StyleSheet.create({
 })
 

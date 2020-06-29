@@ -142,7 +142,7 @@ function App() {
             </Tab.Screen>
             <Tab.Screen name="Profile" component={ProfileScreen} />
           </Tab.Navigator>
-          <FlashMessage position="right" duration={3000} />
+          <FlashMessage position="right" duration={1500} />
         </NavigationContainer>
       </UserProvider>
     ) : (

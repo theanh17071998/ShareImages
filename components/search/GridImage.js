@@ -24,10 +24,31 @@ function GridImage(props) {
                 setImages([])
                 getData(tag)
               })
+              socket.on('serverSearchText', (textSearch) => {
+                setImages([])
+                getDataTextSearch(textSearch)
+              })
           }
       })
       getData('gai-xinh')
   }, [])
+
+  function getDataTextSearch(input) {
+    fetch(API.GET_IMAGES_BY_TEXT + `/${input}`, {
+      headers: jsonHeader.headers,
+      method: getMethod.method,
+    }).then(response => response.json())
+    .then((res) => {
+        if (res.code == 200) {
+          setImages(res.data.images)
+        } else {
+            console.log('ERROR')
+        }
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+  }
 
   function getData(tag) {
     fetch(API.GET_IMAGES_BY_TAG + `/${tag}`, {

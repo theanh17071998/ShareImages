@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, AsyncStorage, Dimensions } from 'react-native'
-import { Container, Header, Item, Input } from 'native-base';
-import { SearchBar, Tile } from 'react-native-elements'
+import { SearchBar, Tile, Button } from 'react-native-elements'
 import { exp, block } from 'react-native-reanimated'
 import Topic from './Topic'
 import GridImage from './GridImage'
@@ -9,15 +8,34 @@ import FullScreen from './FullScreen'
 import { API } from '../../constants/api'
 import { postMethod, jsonHeader } from '../../constants/fetchTool'
 import UserContext from '../../contexts/UserContext'
+import { Container, Item, Input, Icon } from 'native-base';
+
+const windowWidth = Dimensions.get('window').width;
+const screenWidth = (percent) => (windowWidth * percent) / 100;
+const windowHeight = Dimensions.get('window').height;
+const screenHeight = (percent) => (windowHeight * percent) / 100
 
 function Search(props) {
 
     const [clickedImage, setClick] = useState(false)
     const [objectImage, setObjectImage] = useState()
     const [user, setUser] = useState({})
+    const [textSearch, setTextSearch] = useState('')
     const { height, width } = Dimensions.get('window')
     const [clickback, setClickBack] = useState(false)
     const { socket } = useContext(UserContext)
+    const [isLoading, setIsLoading] = useState(false)
+    function handleSearchText() {
+        setIsLoading(true)
+        socket.emit('clientSearchText', {
+            to: user.userName,
+            input: textSearch
+        })
+        setTimeout(() => {
+            setIsLoading(false)
+            setTextSearch('')
+        }, 2000)
+    }
 
     function getImagesByTag(tag) {
         socket.emit('clientClickSearchTag', {
@@ -51,14 +69,22 @@ function Search(props) {
     
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <View style={styles.containerTitle}>
-                    <Text style={styles.userName}>Hi, Hoàng Nam!</Text>
+                    <Text style={styles.userName}>Hi, {`${user.fullName}`}!</Text>
                 </View>
-                <View style={{ flex: 1 }}>
-                    <SearchBar inputStyle={styles.searchInput}
-                        platform='ios'
-                        placeholder='Search images'
+                <Item style={styles.inputSearch}>
+                    <Icon style={{paddingLeft: 10}} name="ios-search" />
+                    <Input placeholder="Search" 
+                        value={textSearch}
+                        onChangeText={ (textSearch) => { setTextSearch(textSearch) } }
                     />
-                </View>
+                    {
+                    isLoading ? (
+                        <Button loading title="Search" />
+                    ) : (
+                        <Button onPress={() => handleSearchText()} title="Search" />
+                        )
+                    }
+                </Item>
                 <ScrollView
                     scrollEventThrottle={16}
                     showsHorizontalScrollIndicator={false}
@@ -151,6 +177,19 @@ var styles = StyleSheet.create({
         width: '45%',
         margin: '1%',
         aspectRatio: 1,
+    },
+    containerSearch: {
+        padding: screenWidth(2)
+    },
+    imgContainer: {
+        borderRadius: 15,
+        marginLeft: screenWidth(3),
+        width: screenWidth(45),
+        marginVertical: screenWidth(3)
+    }, 
+    inputSearch: {
+        marginLeft: screenWidth(2),
+        marginRight: screenWidth(0.6)
     }
 })
 

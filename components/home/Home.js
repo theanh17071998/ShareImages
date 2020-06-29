@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, StyleSheet, Dimensions, ListView, AsyncStorage } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, ListView, AsyncStorage, TouchableOpacity } from 'react-native'
 import MasonryList from "react-native-masonry-list";
 import { Card, Header, SearchBar } from 'react-native-elements';
 import UserContext from '../../contexts/UserContext'
@@ -11,6 +11,7 @@ import PostImage from './PostImage'
 import FullScreen from '../search/FullScreen';
 import { showMessage, hideMessage } from "react-native-flash-message";
 import FlashMessage from "react-native-flash-message";
+import ImageItem from '../profile/ImageItem'
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -54,6 +55,9 @@ function Home(props) {
 
                   })
             })
+            socket.on('serverSaveImage', () => {
+              getData()
+            })
         }
     })
     getData()
@@ -76,7 +80,6 @@ function Home(props) {
           setData(JSON.parse(image))
       }
     })
-
     fetch(API.GET_HOME_IMAGE + scrollCount, {
       headers: jsonHeader.headers,
       method: getMethod.method,
@@ -110,8 +113,8 @@ function Home(props) {
           />
 
           <ScrollView showsVerticalScrollIndicator={false}  >
-            <View style={{ paddingBottom: 200 }}>
-              <MasonryList
+            <View style={{ paddingBottom: 130 }}>
+              {/* <MasonryList
                 columns={2}
                 sorted={true}
                 onPressImage={(object, index) => {
@@ -122,7 +125,29 @@ function Home(props) {
                 images={data}
                 imageContainerStyle={styles.imgContainer}
                 listContainerStyle={styles.listContainer}
-              />
+              /> */}
+              <View style={{ paddingTop: 10 }}>
+                <View style={{ width: windowWidth * 1 }}>
+                  <View style={{ width: windowWidth* 1, right: 6, flexDirection: 'row', flexWrap: 'wrap' }}>
+                    {
+                      data.map((image, index) => {
+                        return (
+                          <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => {
+                              setObjectImage(image)
+                              setPressImage(true)
+                            }}
+                          >
+                            <ImageItem url={image.uri}
+                            />
+                          </TouchableOpacity>
+                        )
+                      })
+                    }
+                  </View>
+                </View>
+              </View>
             </View>
           </ScrollView>
         </View>

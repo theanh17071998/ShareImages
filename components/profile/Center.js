@@ -22,11 +22,7 @@ function CenterProfile(props) {
 
   const [images, setImages] = useState([])
   const { socket } = useContext(UserContext)
-  AsyncStorage.getItem('imagesHome').then((image) => {
-    if (image) {
-      setImages(JSON.parse(image))
-    }
-  })
+  
 
   function getImages() {
     fetch(API.GET_IMAGES_BY_USERID + `/${props.user.userId}`, {
@@ -36,6 +32,7 @@ function CenterProfile(props) {
       .then((res) => {
         setImages(res.data.images)
         // console.log(res.data.images.length)
+        AsyncStorage.setItem('imagesProfile', JSON.stringify(res.data.images))
         if (res.code == 200) {
         } else {
           console.log(res)
@@ -47,6 +44,14 @@ function CenterProfile(props) {
   }
 
   useEffect(() => {
+    AsyncStorage.getItem('imagesProfile').then((image) => {
+      if (image) {
+        setImages(JSON.parse(image))
+      }
+    })
+    socket.on('serverSaveImage', () => {
+      getImages()
+    })
     getImages()
   }, [])
 
@@ -79,14 +84,40 @@ function CenterProfile(props) {
         }
       </Item>
       <ScrollView showsVerticalScrollIndicator={false} >
-        <View style={{ flexDirection: 'row', paddingBottom: 910, paddingTop: 10 }}>
-          <View style={{ width: windowWidth * 1}}>
-            <MasonryList
+        <View style={{ paddingBottom: 910, paddingTop: 10 }}>
+          <View style={{ width: windowWidth * 1 }}>
+            {/* <MasonryList
               columns={2}
               sorted={true}
               onPressImage={ (object, index) => onPressImage(object, index)}
               images={images}
-            />
+            /> */}
+            <View style={{ width: windowWidth* 1, right: 6, flexDirection: 'row', flexWrap: 'wrap' }}>
+              {/* <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  console.log(1)
+                }}
+              >
+                <ImageItem url={'https://cafebiz.cafebizcdn.vn/thumb_w/600/2018/photo1541896513510-1541896513803-crop-15418966185521093414990.jpg'}
+                />
+              </TouchableOpacity> */}
+              {
+                images.map((image, index) => {
+                  return (
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={() => {
+                        onPressImage(image, index)
+                      }}
+                    >
+                      <ImageItem url={image.uri}
+                      />
+                    </TouchableOpacity>
+                  )
+                })
+              }
+            </View>
           </View>
           {/* <View>
             {
